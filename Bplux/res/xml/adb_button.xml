@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+    <RelativeLayout 
+        android:layout_width="fill_parent"
+    	android:layout_height="fill_parent" >
+ 
+    <TextView
+        android:id="@+id/first_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Name: "
+        android:textSize="18dip"/>
+ 
+    <EditText
+        android:id="@+id/last_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="myName"
+        android:layout_below="@+id/first_name"/>
+ 
+     <TextView
+        android:id="@+id/phn1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Provincial Health Number: "
+        android:layout_below="@+id/last_name"
+        android:textSize="18dip"/>
+ 
+     <EditText
+        android:id="@+id/phn2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="myPHN" 
+        android:layout_below="@+id/phn1"/>
+ 
+     <TextView
+        android:id="@+id/gender1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Gender: "
+        android:textSize="18dip"
+        android:layout_below="@+id/phn2"/>
+     
+     <CheckBox
+        android:id="@+id/gender2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Male"
+        android:textSize="18dip"
+        android:layout_below="@+id/gender1"/>  
+        
+     <CheckBox
+        android:id="@+id/gender3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Female"
+        android:textSize="18dip"
+        android:layout_below="@+id/gender1"
+        android:layout_toRightOf="@+id/gender2" /> 
+        
+     <TextView
+        android:id="@+id/bday1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Birthday"
+        android:textSize="18dip"
+        android:layout_below="@+id/gender3"/>
+ 
+     <TextView
+        android:id="@+id/year1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Year:    "
+        android:textSize="18dip"
+        android:layout_below="@+id/bday1"/>
+          
+     <EditText
+        android:id="@+id/year2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="1993"
+        android:layout_below="@+id/year1"/>
+     
+     <TextView
+        android:id="@+id/month1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Month:         "
+        android:textSize="18dip"
+        android:layout_below="@+id/bday1"
+        android:layout_toRightOf="@+id/year1"/>     
+     
+     <Spinner
+        android:id="@+id/month2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="month"
+        android:layout_below="@+id/month1"
+        android:layout_toRightOf="@+id/year2"/>
+     
+     <TextView
+        android:id="@+id/day1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Day: "
+        android:textSize="18dip"
+        android:layout_below="@+id/bday1"
+        android:layout_toRightOf="@+id/month1"/>     
+     
+     <Spinner
+        android:id="@+id/day2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="day"
+        android:layout_below="@+id/day1"
+        android:layout_toRightOf="@+id/month2"/>
+     
+     <Button
+        android:id="@+id/buttonCANCEL"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:text="CANCEL"
+        android:gravity="center"
+        android:textColor="@android:color/black"
+        android:background="@drawable/button"
+        android:layout_below="@+id/year2"/>  
+
+     <Button
+     	android:id="@+id/buttonSUBMIT"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:text="SUBMIT"
+        android:textColor="@android:color/black"
+        android:background="@drawable/button"
+        android:layout_below="@+id/year2"
+        android:layout_toRightOf="@+id/buttonCANCEL"/>
+     
+     
+ 
+</RelativeLayout>
+</ScrollView>

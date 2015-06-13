@@ -1,0 +1,1 @@
+This application is published under the GPL v.2 license. Feel free to modify it, copy it and use it freely to fill your needs.

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="ceu.marten.bitadroid"
+    android:versionCode="4"
+    android:versionName="Beta" >
+
+    <uses-sdk
+        android:maxSdkVersion="19"
+        android:minSdkVersion="14"
+        android:targetSdkVersion="19" />
+
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.WRITE_INTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.WRITE_INTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
+    <uses-feature android:name="android.hardware.camera" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/sunshine"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name="ceu.marten.ui.HomeActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/home_label" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.ubc.capstonegroup70.PatientSessionActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/home_label"
+            android:parentActivityName="ceu.marten.ui.HomeActivity"
+            android:windowSoftInputMode="adjustPan" >
+        </activity>
+        <activity
+            android:name="ceu.marten.ui.ConfigurationsActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/configurations_label"
+            android:parentActivityName="ceu.marten.ui.HomeActivity"
+            android:windowSoftInputMode="adjustPan" >
+        </activity>
+        <activity 
+            android:name="ceu.marten.ui.ConnectionStatusActivity"
+            android:label="Connection Status"
+            android:parentActivityName="ceu.marten.ui.HomeActivity" >            
+        </activity>
+        <activity
+            android:name="ceu.marten.ui.NewRecordingActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/new_recordings_label"
+            android:launchMode="singleTask"
+            android:parentActivityName="ceu.marten.ui.ConfigurationsActivity" >
+        </activity>
+        <activity
+            android:name="ceu.marten.ui.NewConfigurationActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/new_configurations_label"
+            android:parentActivityName="ceu.marten.ui.HomeActivity" >
+        </activity>
+        <activity
+            android:name="ceu.marten.ui.RecordingsActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/recordings_label"
+            android:parentActivityName="ceu.marten.ui.HomeActivity" >
+        </activity>
+        <activity
+            android:name="ceu.marten.ui.SettingsActivity"
+            android:label="@string/global_settings_label" >
+            <intent-filter>
+                <action android:name="ceu.marten.ui.SettingsActivity" />
+                <category android:name="android.intent.cetagory.PREFERENCE" />
+            </intent-filter>
+        </activity>
+         <activity
+            android:name="com.ubc.capstonegroup70.DisplayStoredGraphActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/display_stored_graph_label"
+            android:parentActivityName="com.ubc.capstonegroup70.PatientSessionActivity">
+        </activity>
+
+        <service
+            android:name="ceu.marten.services.BiopluxService"
+            android:enabled="true" />
+    </application>
+
+</manifest>

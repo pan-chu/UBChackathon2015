@@ -1,0 +1,62 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent" 
+    android:background="@android:color/white">
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        
+        android:onClick="onClickedConfiguration"
+        android:paddingLeft="15dip"
+        android:paddingRight="15dip"
+        android:text="BLUETOOTH"
+        android:textColor="@android:color/black"
+        android:textSize="16sp" 
+        android:layout_marginBottom="5dp"
+        android:background="@drawable/button"/>
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/button2"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:src="@drawable/bcchildrens" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:background="@drawable/button_blue"
+        android:paddingLeft="45dip"
+        android:paddingRight="35dip"
+        android:drawableEnd="@drawable/start"
+        android:onClick="onClickedStart"
+        android:textColor="@android:color/white"
+        android:textSize="16sp" 
+        android:text="START SESSION" />
+
+            
+      
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="225dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/button2"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:onClick="onClickedPatientName"
+        android:textSize="16sp" 
+        android:text="Patient Name" 
+        android:background="@drawable/button"
+        android:layout_margin="10dp"/>
+
+</RelativeLayout>

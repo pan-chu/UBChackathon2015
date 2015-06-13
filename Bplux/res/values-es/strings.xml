@@ -1,0 +1,234 @@
+<resources>
+
+    <string name="app_name">Bitadroid</string>
+    <string name="divider_image_content">"divisor"</string>
+    
+    <!-- ACTIVITIES LABELS -->
+    <string name="home_label">Bitadroid</string>
+    <string name="global_settings_label">Ajustes generales</string>
+    <string name="recording_settings_label">Ajustes de grabación</string>
+    <string name="configurations_label">Configuraciones</string>
+    <string name="recordings_label">Grabaciones</string>
+    <string name="new_configurations_label">Nuevas Configuraciones</string>
+    <string name="new_recordings_label">Nueva grabación</string>
+    
+    <!-- MENU ITEMS -->
+    <string name="gm_settings">Ajustes</string>
+    <string name="gm_help">Ayuda</string>
+    <string name="gm_about">Información</string>
+    
+    <string name="gm_help_title">Consejos</string>
+    <string name="gm_help_message">- Para eliminar configuraciones o grabaciones, arrastralos fuera de la pantalla hacia derecha o izquierda \n\n- Mantén pulsada una configuración para editarla</string>
+	
+    <string name="nr_recording_settings">Ajustes</string>
+    <string name="nr_restore_zoom_text">Restaurar zoom</string>
+    
+	<!-- LAYOUTS -->
+    <!-- HOME ACTIVITY -->
+    <string name="ha_title">"Bienvenido,"</string>
+    <string name="ha_description">Antes de realizar la grabación asegúrese de tener su Bitalino encendido y con la batería suficiente para realizar la grabación.
+</string>
+    <string name="ha_button1">"Iniciar grabación"</string>
+    <string name="ha_button2">"Examinar Grabaciones"</string>
+    
+     <!-- SETTINGS ACTIVITY -->
+    <string name="sa_category_title">DIALOGOS DE CONFIRMACIÓN</string>
+    <string name="sa_nr_category_title">GRÁFICOS</string>
+    <string name="sa_configuration_title">Borrando configuraciones</string>
+    <string name="sa_recording_title">Borrando grabaciones</string>
+    <string name="sa_configuration_summary">No mostrar diálogo de confirmación al borrar una configuración</string>
+    <string name="sa_recording_summary">No mostrar diálogo de confirmación al borrar una grabación</string>
+    
+    <string name="sa_draw_in_background_title">Pintar en segundo plano</string>
+    <string name="sa_draw_in_background_summary">Cuándo está activo, los gráficos serán actualizados en segundo plano. Consume más batería</string>
+    <string name="sa_zoom_title">Zoom por click</string>
+    <string name="sa_zoom_dialog_title">Nivel de zoom</string>
+    <string name="sa_zoom_default_summary">El zoom por defecto es de 500 milisegundos</string>
+    <string name="sa_zoom_unit_measure">milisegundos</string>
+    <string name="sa_zoom_summary_message">El zoom actual está fijado en</string>
+    
+    <!-- CONFIGURATIONS ACTIVITY -->
+    <string name="ca_header_title">"Seleccione una configuración"</string>
+    <string name="ca_button">"Añadir una nueva configuración"</string>
+    <string name="ca_info_recording_canceled">Grabación cancelada</string>
+    <string name="ca_name_dialog_title">Nombre de nueva grabación</string>
+    <string name="ca_empty_list">"No hay configuraciones \n Para añadir una, pulse el botón de abajo"</string>
+    
+    <string name="ca_configuration_removed">"Configuración eliminada"</string>
+    <string name="ca_dialog_null_name">Nombre de grabación es obligatorio</string>
+    <string name="ca_dialog_duplicate_name">Nombre de grabación ya existe</string>
+    <string name="ca_confirm_dialog_title">Estas seguro?</string>
+    <string name="ca_confirm_dialog_message">La configuración seleccionada será borrada del dispositivo</string>
+    <string name="ca_confirm_dialog_positive">Confirmar</string>
+    <string name="ca_confirm_dialog_negative">Cancelar</string>
+    <string name="ca_error_dialog_title">Ha habido un error</string>
+    <string name="ca_error_saving_configs_message">La configuración no se ha almacenado debido a un problema con la base de datos interna</string>
+    <string name="ca_error_loading_configs_message">No se han podido cargar las configuraciones de la base de datos interna</string>
+    <string name="ca_error_loading_recordings_message">No se han podido cargar las grabaciones de la base de datos interna</string>
+    <string name="ca_error_deleting_configuration_message">Ha habido un problema al intentar borrar la configuracion de la base de datos</string>
+    <string name="ca_error_updating_configuration_message">Ha habido un problema al intentar actualizar la configuracion de la base de datos</string>
+    
+    <!-- CONFIGURATION LIST ADAPTER -->
+    <string name="cl_active">Activos</string>
+    <string name="cl_display">A mostrar</string>
+    
+    <!-- RECORDINGS ACTIVITY -->
+    <string name="ra_header_title">"Grabaciones almacenadas"</string>
+    <string name="ra_empty_list">"No hay grabaciones"</string>
+    
+    <string name="ra_recording_removed">"Grabación eliminada"</string>
+    <string name="ra_duration">"Duración "</string>
+    <string name="ra_send_dialog_title">Seleccione método de envío</string>
+    <string name="ra_confirm_dialog_title">Estas seguro?</string>
+    <string name="ra_confirm_dialog_message">La grabación será borrada</string>
+    <string name="ra_confirm_dialog_positive">Confirmar</string>
+    <string name="ra_confirm_dialog_negative">Cancelar</string>
+    <string name="ra_error_message_deleting_recording_from_database">Hubo un problema al borrar la grabación de la base de datos</string>
+    <string name="ra_error_message_deleting_recording_from_filesystem">Hubo un problema al borrar la grabación de la memoria interna de su dispositivo</string>
+    <string name="ra_display_path_dialog_title">El tamaño de la grabación es muy grande</string>
+    <string name="ra_display_path_dialog_message">Su tamaño es mayor de 20 MB y no puede ser enviado por email.\nPara transferir la grabación, conecte el dispositivo con cable USB al PC y acceda a la carpeta Bioplux</string>
+    
+    
+    <!-- NEW CONFIGURATION ACTIVITY -->
+    <string name="nc_header_title">Nueva configuración</string>
+    <string name="nc_configuration_name">Nombre de la Configuracion</string>
+    <string name="nc_mac_address">Dirección MAC</string>
+    <string name="nc_mac_address_hint">00: B0: D0: 86: BB: F7</string>
+    <string name="nc_frequency_reception">Frecuencia de adquisición</string>
+    <string name="nc_frequency_reception_default">"100"</string>
+    <string name="nc_frequency_metric">Hz</string>
+    <string name="nc_frequency_sampling">Frecuencia de visualización</string>
+    <string name="nc_frequency_sampling_default">100</string>
+    <string name="nc_bits">Bits por señal</string>
+    <string name="nc_bits_eight">8</string>
+    <string name="nc_bits_twelve">12</string>
+    <string name="nc_button_active_channels">Seleccione los canales a activar</string>
+    <string name="nc_button_channels_to_display">Seleccione los canales a mostrar</string>
+    <string name="nc_button_cancel">Cancelar</string>
+    <string name="nc_button_submit">Guardar</string>
+    
+    <string name="nc_channels_to_activate">Canales a activar:  </string>
+    <string name="nc_error_channels_to_display">Canales a mostrar tienen que ser menos de 3</string>
+    <string name="nc_error_max_frequency">La frecuencia máxima es </string>
+    <string name="nc_error_min_frequency">La frecuencia mínima es </string>
+    <string name="nc_error_button_channels_to_display">Por favor, seleccione los canales activos primero</string>
+    <string name="nc_error_message_name_null">Introduzca un nombre</string>
+    <string name="nc_error_message_name_duplicate">Este nombre ya existe</string>
+    <string name="nc_error_message_mac">Dirección MAC inválida.</string>
+    <string name="nc_error_message_active_channels">Canales activos no seleccionados</string>
+    <string name="nc_error_message_channels_to_display">Seleccione canales a mostrar</string>
+    <string name="nc_info_created">Configuración creada</string>
+    <string name="nc_info_modified">Configuración modificada</string>
+    <string name="nc_info_canceled">Configuración cancelada</string>
+    <string name="nc_dialog_title_channels_to_display">  Seleccione los canales a mostrar</string>
+    <string name="nc_dialog_title_channels_to_activate">  Seleccione los canales a activar</string>
+    <string name="nc_dialog_positive_button">Aceptar</string>
+    <string name="nc_dialog_negative_button">Cancelar</string>
+    <string name="nc_dialog_with_sensor">con sensor </string>
+    <string name="nc_dialog_channel">"Canal"</string>
+    <string name="nc_active_channels_list_adapter_comparation">electrocardiograma</string>
+    
+    <!-- NEW RECORDING ACTIVITY -->
+    <string name="nr_configuration_name">Nombre de la configuración: </string>
+    <string name="nr_reception_frequency">Frecuencia de adquisición: </string>
+    <string name="nr_sampling_frequency">Frecuencia de visualización: </string>
+    <string name="nr_bits">Número de bits: </string>
+    <string name="nr_active_channels">Canales activos: </string>
+    <string name="nr_button_start">"Iniciar grabación"</string>
+    
+    <string name="nr_bluetooth_not_supported">Su dispositivo no tiene soporte para bluetooth</string>
+    <string name="nr_button_stop">Parar grabación</string>
+    <string name="nr_info_started">Grabación ha comenzado</string>
+    <string name="nr_info_rec_saved">Grabación guardada</string>
+    <string name="nr_back_dialog_title">Estas seguro?</string>
+    <string name="nr_bluetooth_dialog_title">Problema con bluetooth</string>
+    <string name="nr_storage_error_dialog_title">Error de memoria</string>
+    <string name="nr_overwrite_dialog_title">La grabación actual será sobrescrita</string>
+    <string name="nr_overwrite_dialog_message">La grabacion actual se perderá. ¿Desea continuar?</string>
+    <string name="nr_back_dialog_message">Si procedes, la grabación será detenida y almacenada</string>
+    <string name="nr_overwrite_dialog_positive_button">Continuar</string>
+    <string name="nr_bluetooth_dialog_message">Bluetooth tiene que estar encendido para la conexión con el dispositivo Bitalino</string>
+    <string name="nr_back_dialog_positive_button">Proceder</string>
+    <string name="nr_bluetooth_dialog_positive_button">Conectar</string>
+    <string name="nr_progress_dialog_title">Buscando dispositivos Bitalino</string>
+    <string name="nr_progress_dialog_message">Intentando establecer conexion</string>
+    <string name="nr_saving_dialog_title">Almacenando grabación</string>
+    <string name="nr_saving_dialog_adding_header_message">Adjuntando la cabecera de la grabación</string>
+    <string name="nr_saving_dialog_compressing_message">Comprimiendo grabación</string>
+    
+    <!-- BIOPLUX NOTIFICATION MESSAGES -->
+    <string name="bp_address_incorrect">La dirección MAC especificada es sintaticamente incorrecta</string>
+    <string name="bp_adapter_not_found">No se encuentra ningún adaptador bluetooth. Verifica que el adaptador está conectado y encendido</string>
+    <string name="bp_device_not_found">El dispositivo Bitalino no se encuentra. Verifica que está al alcance, encendido y su batería esta bien (luz roja está apagada)</string>
+    <string name="bp_contacting_device">Se ha perdido la comunicación con el dispositivo Bitalino. Verifica que está al alcance, encendido y su batería esta bien (luz roja está apagada)</string>
+    <string name="bp_port_could_not_be_opened">El puerto de comunicación no existe o está siendo usado</string>
+    <string name="bp_error_writing_a_frame">Hubo un error al almacenar muestras en la memoria interna de su dispositivo</string>
+    <string name="bp_error_saving_recording">Su dispositivo no tiene suficiente memoria libre para almacenar la grabación</string>
+    <string name="bp_positive_button">Entendido</string>
+    
+     <!-- BIOPLUX SERVICE -->
+    <string name="bs_header_name">Nombre de configuracion: </string>
+    <string name="bs_header_date">Fecha y hora de inicio: </string>
+    <string name="bs_header_frequency">Frecuencia: </string>
+    <string name="bs_header_bits">Numero de bits: </string>
+    <string name="bs_header_duration">Duracion: </string>
+    <string name="bs_header_seconds">segundos</string>
+    <string name="bs_header_active_channels">Canales activos: </string>
+    
+    <string name="bs_notification_title">Dispositivo conectado</string>
+    <string name="bs_notification_message">Recibiendo muestras del dispositivo Bitalino.</string>
+    
+    
+    <!-- DIALOG NAME -->
+    <string name="d_hint">Grabación 1</string>
+    <string name="d_confirmationCheck">Omitir dialogo de confirmación </string>
+    
+    
+    <!-- ATTRIBUTES -->
+    <!-- CHANNELS LIST -->
+    <string-array name="channels">
+        <item> canal 1</item>
+        <item >canal 2</item>
+        <item >canal 3</item>
+        <item >canal 4</item>
+        <item >canal 5</item>
+        <item >canal 6</item>
+    </string-array>
+    
+     <!-- SENSORS LIST -->
+    <string-array name="sensors">
+        <item>Electroencefalograma</item>
+        <item>Volumen de presión en sangre</item>
+        <item>Electromiograma</item>
+        <item>Actividad electrodermal de la piel</item>
+        <item>Acelerómetro triaxial 1</item>
+        <item>Acelerómetro triaxial 2</item>
+        <item>Acelerómetro triaxial 3</item>
+        <item>Respiración</item>
+        <item>Electrocardiograma</item>
+        <item>Presión</item>
+        <item>Temperatura</item>
+        <item>Fuerza</item>
+        <item>Ángulo</item>
+    </string-array>
+    
+     <!-- ZOOM ENTRIES -->
+    <string-array name="zoom_entries">
+        <item>bajo</item>
+        <item>medio</item>
+        <item>alto</item>
+        <item>muy alto</item>
+    </string-array>
+    
+    <!-- ZOOM ENTRY VALUES -->
+    <string-array name="zoom_entry_values">
+        <item>150</item>
+        <item>200</item>
+        <item>300</item>
+        <item>400</item>
+    </string-array>
+
+    <!-- IDs -->
+ 	<string name="service_id">"este servicio de identificación único"</string> 
+ 	
+</resources>

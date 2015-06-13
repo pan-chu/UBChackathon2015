@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+    <RelativeLayout 
+        android:layout_width="fill_parent"
+    	android:layout_height="fill_parent" >
+ 
+    <EditText
+        android:id="@+id/first_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+        android:maxLines="1"
+        android:hint="First Name"/>
+ 
+     <EditText
+        android:id="@+id/last_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/first_name"
+        android:singleLine="true"
+        android:maxLines="1"
+        android:hint="Last Name"/>
+     
+     <Button
+        android:id="@+id/buttonCANCEL"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:text="CANCEL"
+        android:gravity="center"
+        android:textColor="@android:color/black"
+        android:background="@drawable/button"
+        android:layout_below="@+id/last_name"/>  
+
+     <Button
+     	android:id="@+id/buttonSUBMIT"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:text="SUBMIT"
+        android:textColor="@android:color/black"
+        android:background="@drawable/button"
+        android:layout_below="@+id/last_name"
+        android:layout_toRightOf="@+id/buttonCANCEL"/>
+     
+     
+ 
+</RelativeLayout>
+</ScrollView>
