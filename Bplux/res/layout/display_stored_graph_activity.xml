@@ -74,13 +74,15 @@
             android:text=""
             android:textStyle="bold" />
 
-        <RelativeLayout
+        <LinearLayout
 	        android:id="@+id/dataGraph"
 	        android:gravity="fill_horizontal"
 	        android:layout_width="fill_parent"
 	        android:layout_height="match_parent"
-	        android:orientation="horizontal">
-	    </RelativeLayout>
+	        android:orientation="vertical"
+            android:layout_gravity="center">
+	    </LinearLayout>
+
     </LinearLayout>
     
     <LinearLayout
