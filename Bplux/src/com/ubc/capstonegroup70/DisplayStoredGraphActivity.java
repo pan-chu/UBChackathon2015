@@ -298,46 +298,49 @@ public class DisplayStoredGraphActivity extends Activity {
 	  graphView.getGraphViewStyle().setVerticalLabelsColor(Color.BLACK);
 	  graphView.getGraphViewStyle().setVerticalLabelsWidth(80);
 
-		RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-		params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, RelativeLayout.TRUE);
+		LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(
+				LinearLayout.LayoutParams.MATCH_PARENT,
+				LinearLayout.LayoutParams.MATCH_PARENT, withVideo ? 0.5f : 1.0f);
 
+		graphView.setLayoutParams(param);
 
-		RelativeLayout layout = (RelativeLayout) findViewById(R.id.dataGraph);
+		LinearLayout layout = (LinearLayout) findViewById(R.id.dataGraph);
+
 		layout.removeAllViews();
-		graphView.setLayoutParams(params);
-		layout.addView(graphView);
 
 
-
-	 // if withVideo then add videoView
+	 	// if withVideo then add videoView
 		if (withVideo) {
 
-			// TODO COMING UP WITH PATH recordingName.substring(0, recordingName.lastIndexOf('.'));
-
 			File dcimDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM);
-			File cameraDir;
+			String videoPath = "";
 
+			// TODO currently we're just grabbing the first video that we find - should be able to just use recordingName.substring(0, recordingName.lastIndexOf('.')
 			for (File file : dcimDir.listFiles())
 			{
-				if (file.getPath().endsWith("Camera"))
+				if (file.getPath().endsWith(".mp4"))
 				{
-					cameraDir = file;
+					videoPath = file.getPath();
+					break;
 				}
 			}
-//
-//			if (cameraDir != null)
-//			{
-//
-//			}
-
-			RelativeLayout.LayoutParams videoParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-			videoParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, RelativeLayout.TRUE);
-			videoParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT, RelativeLayout.TRUE);
 
 			VideoView videoView = new VideoView(this);
+
+			LinearLayout.LayoutParams videoParams = new LinearLayout.LayoutParams(
+					LinearLayout.LayoutParams.MATCH_PARENT,
+					LinearLayout.LayoutParams.MATCH_PARENT, 0.5f);
+
+			videoView.setLayoutParams(videoParams);
+
 			layout.addView(videoView);
-			videoView.bringToFront();
+
+			videoView.setVideoPath(videoPath);
+			videoView.start();
 		}
+
+		layout.addView(graphView);
+
 	}
 
 	
