@@ -207,7 +207,8 @@ public class HomeActivity extends Activity {
 	}
 	
 	public void onClickedStart(View view) {
-		if (configset && nameset){
+        if (nameset) {
+		// if (configset && nameset){
 			Intent patientSessionIntent = new Intent(this, PatientSessionActivity.class);
 			patientSessionIntent.putExtra("patientName", PatientName);
 			patientSessionIntent.putExtra("patientFName", PatientFName);

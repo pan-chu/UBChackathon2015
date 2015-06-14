@@ -4,14 +4,6 @@
 
 package ceu.marten.ui;
 
-import java.io.File;
-import java.io.IOException;
-import java.sql.SQLException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ActivityManager;
@@ -26,27 +18,54 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
+import android.content.pm.ActivityInfo;
 import android.hardware.Camera;
+import android.media.CamcorderProfile;
+import android.media.MediaRecorder;
 import android.net.Uri;
-import android.os.*;
+import android.os.Bundle;
+import android.os.Environment;
+import android.os.Handler;
+import android.os.IBinder;
+import android.os.Message;
+import android.os.Messenger;
+import android.os.RemoteException;
+import android.os.SystemClock;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.util.Log;
-import android.view.*;
+import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.SurfaceHolder;
+import android.view.SurfaceView;
+import android.view.View;
 import android.view.View.OnTouchListener;
+import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
-import android.widget.*;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.Chronometer;
+import android.widget.LinearLayout;
+import android.widget.PopupMenu;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.jjoe64.graphview.GraphView.GraphViewData;
+
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import ceu.marten.bitadroid.R;
 import ceu.marten.model.Constants;
 import ceu.marten.model.DeviceConfiguration;
 import ceu.marten.model.DeviceRecording;
 import ceu.marten.model.io.DataManager;
-import ceu.marten.model.io.DatabaseHelper;
 import ceu.marten.services.BiopluxService;
-
-import com.j256.ormlite.android.apptools.OrmLiteBaseActivity;
-import com.j256.ormlite.dao.Dao;
-import com.jjoe64.graphview.GraphView.GraphViewData;
 
 /**
  * Used to record a session based on a configuration and display the
@@ -56,7 +75,7 @@ import com.jjoe64.graphview.GraphView.GraphViewData;
  * @author Carlos Marten
  * 
  */
-public class NewRecordingActivity extends OrmLiteBaseActivity<DatabaseHelper> implements android.widget.PopupMenu.OnMenuItemClickListener, OnSharedPreferenceChangeListener {
+public class NewRecordingActivity extends Activity implements android.widget.PopupMenu.OnMenuItemClickListener, OnSharedPreferenceChangeListener, View.OnClickListener, SurfaceHolder.Callback {
 
 	
 	public double cal_num=0;
@@ -73,17 +92,19 @@ public class NewRecordingActivity extends OrmLiteBaseActivity<DatabaseHelper> im
 	// key for recovery. Used when android kills activity
 	public static final String KEY_CHRONOMETER_BASE = "chronometerBase";
 
+    // Video
+    // private MediaRecorder mMediaRecorder;
+    private Camera mCamera;
+    private static int REQUEST_VIDEO_CAPTURE = 1;
 
-	private  Camera mCamera;
-	private CameraPreview mPreview;
+    MediaRecorder recorder;
+    SurfaceHolder holder;
+    boolean videoRecording = false;
+
 
 	// 10 seconds
 	private  final int maxDataCount = 10000; 
 
-
-	static int REQUEST_VIDEO_CAPTURE = 1;
-
-	private String mcurrentVideoPath;
 
 	// Android's widgets
 	private  TextView uiRecordingName, uiConfigurationName, uiNumberOfBits,
@@ -155,8 +176,30 @@ public class NewRecordingActivity extends OrmLiteBaseActivity<DatabaseHelper> im
         	return true;
         }
    };
-	
-	/**
+
+    @Override
+    public void surfaceCreated(SurfaceHolder holder) {
+        prepareRecorder();
+        System.out.println("Prepared recorder for surfaceCreated");
+    }
+
+    @Override
+    public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+
+    }
+
+    @Override
+    public void surfaceDestroyed(SurfaceHolder holder) {
+        if (videoRecording) {
+            recorder.stop();
+            videoRecording = false;
+        }
+        // recorder.release();
+        // finish();
+        System.out.println("Would have released recorder here.. but it keeps giving me NPE's");
+    }
+
+    /**
 	 * Handler that receives messages from the service. It receives frames data,
 	 * error messages and a saved message if service stops correctly
 	 * 
@@ -378,23 +421,88 @@ public class NewRecordingActivity extends OrmLiteBaseActivity<DatabaseHelper> im
 		setupConnectionErrorDialog();
 
 
-		// Create an instance of Camera
-		mCamera = getCameraInstance();
+        // SETUP VIDEO
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-		// Create our Preview view and set it as the content of our activity.
-		mPreview = new CameraPreview(this, mCamera);
-		FrameLayout preview = (FrameLayout) findViewById(R.id.camera_preview);
-		preview.addView(mPreview);
+        recorder = new MediaRecorder();
+        /*mCamera = getCameraInstance();
+        mCamera.unlock();
+        recorder.setCamera(mCamera); */
+        initRecorder();
+        setContentView(R.layout.ly_new_recording);
+
+        SurfaceView cameraView = (SurfaceView) findViewById(R.id.CameraView);
+        holder = cameraView.getHolder();
+        holder.addCallback(this);
+        holder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
+        cameraView.setClickable(true);
+        cameraView.setOnClickListener(this);
+
 	}
+
+    private void initRecorder() {
+        recorder.setAudioSource(MediaRecorder.AudioSource.DEFAULT);
+        recorder.setVideoSource(MediaRecorder.VideoSource.DEFAULT);
+        // recorder.setAudioSource(MediaRecorder.AudioSource.CAMCORDER);
+        // recorder.setVideoSource(MediaRecorder.VideoSource.CAMERA);
+
+        CamcorderProfile cpHigh = CamcorderProfile.get(CamcorderProfile.QUALITY_HIGH);
+        recorder.setProfile(cpHigh);
+        extras = getIntent().getExtras();
+        String name = extras.getString("recordingName");
+        recorder.setOutputFile(Environment.getExternalStorageDirectory().toString() + "/" + name + ".mp4");
+        System.out.println("Output File: " + Environment.getExternalStorageDirectory()+toString() + "/" + name + ".mp4");
+        recorder.setMaxDuration(50000);
+        recorder.setMaxFileSize(5000000);
+        System.out.println("Recorder initialized");
+    }
+
+    private void prepareRecorder() {
+        recorder.setPreviewDisplay(holder.getSurface());
+
+        try {
+            recorder.prepare();
+            System.out.println("Recorder prepared");
+        } catch (IllegalStateException e) {
+            e.printStackTrace();
+            finish();
+        } catch (IOException e) {
+            e.printStackTrace();
+            finish();
+        }
+    }
+
+
+    // TODO: comment this out when the main button works; can remove implementation of interface as well
+    @Override
+    public void onClick(View v) {
+        if (videoRecording) {
+            recorder.stop();
+            videoRecording = false;
+            initRecorder();
+            prepareRecorder();
+            System.out.println("Paused recording, ready to start recording again");
+        } else {
+            videoRecording = true;
+            recorder.start();
+        }
+    }
 
 	/** A safe way to get an instance of the Camera object. */
 	public static Camera getCameraInstance(){
 		Camera c = null;
 		try {
 			c = Camera.open(); // attempt to get a Camera instance
+            // Camera.Size s = c.getParameters().getPreferredPreviewSizeForVideo();
+            // c.getParameters().setPreviewSize(s.width / 2, s.height / 2);
 		}
 		catch (Exception e){
 			// Camera is not available (in use or does not exist)
+            System.out.println("Unable to locate camera");
+            e.printStackTrace();
 		}
 		return c; // returns null if camera is unavailable
 	}
@@ -471,20 +579,14 @@ public class NewRecordingActivity extends OrmLiteBaseActivity<DatabaseHelper> im
 				//uiActiveChannels.setText(recordingConfiguration.getActiveChannels().toString());
 			}*/
 
-
-
-
-
-		// TODO uncomment later
-
-		dispatchMakeVideoIntent();
 	}
 
 
 	/**
 	 * Video Recording
 	 */
-	public void dispatchMakeVideoIntent(){
+
+    public void dispatchMakeVideoIntent(){
 		Intent makeVideoIntent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
 		// Ensure that there's a camera activity to handle the intent
 
@@ -515,7 +617,7 @@ public class NewRecordingActivity extends OrmLiteBaseActivity<DatabaseHelper> im
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == REQUEST_VIDEO_CAPTURE && resultCode == Activity.RESULT_OK) {
-			Toast.makeText(this, "Video saved to:\n" + data.getData(), Toast.LENGTH_LONG).show();
+			System.out.println("Video saved");
 		}
 		else if (resultCode == RESULT_CANCELED) {
 		}
@@ -531,22 +633,58 @@ public class NewRecordingActivity extends OrmLiteBaseActivity<DatabaseHelper> im
 		String name = extras.getString("recordingName");
 
 		File storageDir = Environment.getExternalStoragePublicDirectory(
-				Environment.DIRECTORY_DCIM);
+                Environment.DIRECTORY_DCIM);
 
 		File video = File.createTempFile(
-				name,  			/* prefix */
-				".mp4",         /* suffix */
-				storageDir      /* directory */	/** A basic Camera preview class */
+				name,
+				".mp4",
+				storageDir
 		);
 
-		// Save a file: path for use with ACTION_VIEW intents
-		mcurrentVideoPath = "file:" + video.getAbsolutePath();
+		// mcurrentVideoPath = "file:" + video.getAbsolutePath();
 
 		System.out.println(video.getAbsolutePath());
 		return video;
 	}
 
+/*
+    private boolean prepareVideoRecorder(){
 
+        mCamera = getCameraInstance();
+        mMediaRecorder = new MediaRecorder();
+
+        // Step 1: Unlock and set camera to MediaRecorder
+        mCamera.unlock();
+        mMediaRecorder.setCamera(mCamera);
+
+        // Step 2: Set sources
+        mMediaRecorder.setAudioSource(MediaRecorder.AudioSource.CAMCORDER);
+        mMediaRecorder.setVideoSource(MediaRecorder.VideoSource.CAMERA);
+
+        // Step 3: Set a CamcorderProfile (requires API Level 8 or higher)
+        mMediaRecorder.setProfile(CamcorderProfile.get(CamcorderProfile.QUALITY_HIGH));
+
+        // Step 4: Set output file
+        mMediaRecorder.setOutputFile(getOutputMediaFile(MEDIA_TYPE_VIDEO).toString());
+
+        // Step 5: Set the preview output
+        mMediaRecorder.setPreviewDisplay(mPreview.getHolder().getSurface());
+
+        // Step 6: Prepare configured MediaRecorder
+        try {
+            mMediaRecorder.prepare();
+        } catch (IllegalStateException e) {
+            Log.d(TAG, "IllegalStateException preparing MediaRecorder: " + e.getMessage());
+            releaseMediaRecorder();
+            return false;
+        } catch (IOException e) {
+            Log.d(TAG, "IOException preparing MediaRecorder: " + e.getMessage());
+            releaseMediaRecorder();
+            return false;
+        }
+        return true;
+    }
+*/
 	
 	/**
 	 * called when the back button is pressed and the recording is still
@@ -675,19 +813,21 @@ public class NewRecordingActivity extends OrmLiteBaseActivity<DatabaseHelper> im
 						new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog, int id) {
 								// deletes current recording from Android's internal Database
+                                /*
 								try {
 									Dao<DeviceRecording, Integer> dao = getHelper().getRecordingDao();
 									dao.delete(recording);
 								} catch (SQLException e) {
 									Log.e(TAG, "saving recording exception", e);
 								}
-								
+								*/
 								// Reset activity variables
 								recordingOverride = false;
 								serviceError = false;
 								closeRecordingActivity = false;
 								savingDialogMessageChanged = false;
 								goToEnd = true;
+                                videoRecording = false;
 								
 								// Reset activity content
 								View graphsView = findViewById(R.id.nr_graphs);
@@ -812,7 +952,7 @@ public class NewRecordingActivity extends OrmLiteBaseActivity<DatabaseHelper> im
 		else if(mBluetoothAdapter.isEnabled() && !isServiceRunning() && !recordingOverride) {
 			connectionThread.start();
 		}
-		
+
 		return false;
 	}
 
@@ -896,7 +1036,8 @@ public class NewRecordingActivity extends OrmLiteBaseActivity<DatabaseHelper> im
 	/**
 	 * Saves the recording on Android's internal Database with ORMLite
 	 */
-	public void saveRecordingOnInternalDB() {
+	/*
+    public void saveRecordingOnInternalDB() {
 		DateFormat dateFormat = DateFormat.getDateTimeInstance();
 		Date date = new Date();
 
@@ -911,6 +1052,7 @@ public class NewRecordingActivity extends OrmLiteBaseActivity<DatabaseHelper> im
 			displayConnectionErrorDialog(10); // 10 -> fatal error
 		}
 	}
+    */
 
 	/**
 	 * Gets all the processes that are running on the OS and checks whether the
@@ -956,6 +1098,9 @@ public class NewRecordingActivity extends OrmLiteBaseActivity<DatabaseHelper> im
 		System.out.println("##### NewRecordingActivity ##### - Main Button is Clicked");
 		if (!isServiceRunning() && !recordingOverride) {
 			startRecording();
+            videoRecording = true;
+            recorder.start();
+
 		// Overwrites recording
 		} else if (!isServiceRunning() && recordingOverride) {
 //			showOverwriteDialog();
@@ -965,6 +1110,7 @@ public class NewRecordingActivity extends OrmLiteBaseActivity<DatabaseHelper> im
 			closeRecordingActivity = false;
 			savingDialogMessageChanged = false;
 			goToEnd = true;
+            videoRecording = false;
 			
 			// Reset activity content
 			View graphsView = findViewById(R.id.nr_graphs);
@@ -1057,16 +1203,34 @@ public class NewRecordingActivity extends OrmLiteBaseActivity<DatabaseHelper> im
 	protected void onPause() {
 		try {
 			unbindFromService();
-		} catch (Throwable t) {
+            releaseMediaRecorder();       // if you are using MediaRecorder, release it first
+            releaseCamera();              // release the camera immediately on pause event
+        } catch (Throwable t) {
 			Log.e(TAG, "failed to unbind from service when activity is destroyed", t);
 			displayConnectionErrorDialog(10); // 10 -> fatal error
 		}
 		super.onPause();
 		Log.i(TAG, "onPause()");
 	}
-	
 
-	@Override
+    private void releaseMediaRecorder(){
+        if (recorder != null) {
+            recorder.reset();   // clear recorder configuration
+            recorder.release(); // release the recorder object
+            recorder = null;
+        }
+    }
+
+    private void releaseCamera(){
+        if (mCamera != null){
+            mCamera.release();        // release the camera for other applications
+            mCamera = null;
+        }
+    }
+
+
+
+    @Override
 	protected void onSaveInstanceState(Bundle outState) {
 		Log.i(TAG, "onSavedInstance");
 		outState.putLong(KEY_CHRONOMETER_BASE, chronometer.getBase());
@@ -1085,72 +1249,5 @@ public class NewRecordingActivity extends OrmLiteBaseActivity<DatabaseHelper> im
 		Log.i(TAG, "onDestroy()");
 	}
 
-
-	/** A basic Camera preview class */
-	private class CameraPreview extends SurfaceView implements SurfaceHolder.Callback {
-		private SurfaceHolder mHolder;
-		private Camera mCamera;
-
-		public CameraPreview(Context context, Camera camera) {
-			super(context);
-			mCamera = camera;
-
-			// Install a SurfaceHolder.Callback so we get notified when the
-			// underlying surface is created and destroyed.
-			mHolder = getHolder();
-			mHolder.addCallback(this);
-			// deprecated setting, but required on Android versions prior to 3.0
-			mHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
-		}
-
-		public void surfaceCreated(SurfaceHolder holder) {
-			// TODO: The Surface has been created, now tell the camera where to draw the preview.
-			try {
-				mCamera.setPreviewDisplay(holder);
-				mCamera.startPreview();
-			} catch (IOException e) {
-				Log.d(TAG, "Error setting camera preview: " + e.getMessage());
-			}
-		}
-
-		public void surfaceDestroyed(SurfaceHolder holder) {
-			// empty. Take care of releasing the Camera preview in your activity.
-		}
-
-		public void surfaceChanged(SurfaceHolder holder, int format, int w, int h) {
-			// If your preview can change or rotate, take care of those events here.
-			// Make sure to stop the preview before resizing or reformatting it.
-
-			if (mHolder.getSurface() == null){
-				// preview surface does not exist
-				return;
-			}
-
-			// stop preview before making changes
-			try {
-				mCamera.stopPreview();
-			} catch (Exception e){
-				// ignore: tried to stop a non-existent preview
-			}
-
-			// set preview size and make any resize, rotate or
-			// reformatting changes here
-			try {
-				mCamera.getParameters().setPreviewSize(128, 128);
-
-//				mCamera.getParameters().setPreviewSize(mCamera.getParameters().getSupportedPreviewSizes().get(0));
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			// start preview with new settings
-			try {
-				mCamera.setPreviewDisplay(mHolder);
-				mCamera.startPreview();
-
-			} catch (Exception e){
-				e.printStackTrace();
-			}
-		}
-	}
 
 }

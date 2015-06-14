@@ -17,18 +17,25 @@
             android:gravity="center"
             android:textColor="@android:color/white"
             android:textSize="20sp" />
-        
-
-    </RelativeLayout>
-
-    <include layout="@layout/header_shadow" />
-
-    <FrameLayout
+<!--
+        <FrameLayout
             android:id="@+id/camera_preview"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_weight="1"
             />
+            -->
+
+        <SurfaceView
+            android:id="@+id/CameraView"
+            android:layout_width="196dp"
+            android:layout_height="128dp"
+            android:orientation="vertical"
+            android:layout_alignParentEnd="true" />
+
+    </RelativeLayout>
+
+    <include layout="@layout/header_shadow" />
 
     <ScrollView
         android:id="@+id/nr_scroll_view"
@@ -36,16 +43,17 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/shadow"
         android:layout_marginBottom="60dip"
-        android:fillViewport="true" >
+        android:fillViewport="true">
 
         <LinearLayout
             android:id="@+id/nr_graphs"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:background="#fff"
-            android:orientation="vertical" >
+            android:orientation="vertical">
         </LinearLayout>
     </ScrollView>
+
 
     <LinearLayout
         android:id="@+id/nr_buttons"

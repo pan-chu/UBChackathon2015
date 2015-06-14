@@ -1,6 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:clickable="false">
 
     <RelativeLayout
         android:id="@+id/lyHeader"
@@ -17,7 +18,21 @@
             android:gravity="center"
             android:textColor="@android:color/white"
             android:textSize="20sp" />
-        
+<!--
+        <FrameLayout
+            android:id="@+id/camera_preview"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            />
+            -->
+        <SurfaceView
+            android:id="@+id/CameraView"
+            android:layout_width="196dp"
+            android:layout_height="128dp"
+            android:orientation="vertical"
+            android:layout_alignParentEnd="true" />
+
 
     </RelativeLayout>
 
@@ -29,16 +44,18 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/shadow"
         android:layout_marginBottom="60dip"
-        android:fillViewport="true" >
+        android:fillViewport="true">
 
         <LinearLayout
             android:id="@+id/nr_graphs"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:background="#fff"
-            android:orientation="vertical" >
+            android:orientation="vertical">
         </LinearLayout>
+
     </ScrollView>
+
 
     <LinearLayout
         android:id="@+id/nr_buttons"
