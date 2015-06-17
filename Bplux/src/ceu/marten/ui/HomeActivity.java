@@ -2,17 +2,6 @@
 
 package ceu.marten.ui;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.text.DateFormat;
-import java.util.Date;
-import java.util.Scanner;
-import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -30,12 +19,28 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
-import ceu.marten.bitadroid.R;
-import ceu.marten.model.DeviceConfiguration;
 
 import com.ubc.capstonegroup70.PatientSessionActivity;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
+import java.util.Scanner;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import ceu.marten.bitadroid.R;
+import ceu.marten.model.DeviceConfiguration;
 
 
 public class HomeActivity extends Activity {
@@ -53,7 +58,7 @@ public class HomeActivity extends Activity {
 	private String MasterPatientList = "patientNames.txt";
 	private String PatientInfoExtension = "INFO.txt";
 	private DeviceConfiguration newConfiguration;
-	private String[]  activeChannels = {"EMG"};
+	private List<String> activeChannels = new ArrayList(Arrays.asList("EMG"));
 	private String[] spinner_array = new String[20];
 	private int spinner_array_count;
 	Context context = this;
@@ -91,7 +96,6 @@ public class HomeActivity extends Activity {
 		mButton.setTextSize(15);
 		mButton1 = (Button)findViewById(R.id.button3);
 		mButton1.setTextSize(15);
-	
 	}
 	
 	public void onClickedPatientName(View view) {
@@ -229,8 +233,10 @@ public class HomeActivity extends Activity {
 	private void setConfigurationDefaults(){
 		newConfiguration = new DeviceConfiguration(this);
 		newConfiguration.setNumberOfBits(12);
-		newConfiguration.setActiveChannels(activeChannels);
-		newConfiguration.setDisplayChannels(activeChannels);
+        for (String ac : activeChannels) {
+            newConfiguration.setActiveChannels(ac);
+            newConfiguration.setDisplayChannels(ac);
+        }
 		newConfiguration.setName("MYconfig");
 		DateFormat dateFormat = DateFormat.getDateTimeInstance();
 		Date date = new Date();
@@ -238,6 +244,16 @@ public class HomeActivity extends Activity {
 		newConfiguration.setVisualizationFrequency(1000);
 		newConfiguration.setSamplingFrequency(100);
 	}
+
+    public void onCheckboxClicked(View view) {
+       CheckBox multiChannel = (CheckBox)findViewById(R.id.multiChannel);
+        if (multiChannel.isChecked() && activeChannels.size() == 1) {
+            activeChannels.add("EMG");
+        }
+        else if (!multiChannel.isChecked() && activeChannels.size() > 1) {
+            activeChannels.remove("EMG");
+        }
+    }
 	
 	private void btListGenerator(){
 		
@@ -527,5 +543,9 @@ private void readwriteBT(boolean task, String btName) throws IOException{
 			
 		}
 	}
+
+    public List<String> getActiveChannels() {
+        return activeChannels;
+    }
 
 }

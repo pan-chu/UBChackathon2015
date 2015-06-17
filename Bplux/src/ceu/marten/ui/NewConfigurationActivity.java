@@ -5,13 +5,6 @@
 
 package ceu.marten.ui;
 
-import java.text.DateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.TreeSet;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -19,7 +12,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,15 +20,18 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.RadioButton;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
+
+import java.text.DateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+
 import ceu.marten.bitadroid.R;
 import ceu.marten.model.DeviceConfiguration;
-import ceu.marten.ui.adapters.ActiveChannelsListAdapter;
 import ceu.marten.ui.adapters.DisplayChannelsListAdapter;
 
 /**
@@ -71,7 +66,7 @@ public class NewConfigurationActivity extends Activity {
 	private TextView activeChannelsTV, displayChannelsTV;
 	private LayoutInflater inflater;
 
-	private String[]  activeChannels = {"EMG"};//{"EMG",null,null,null,null,"BATTERY"};//{"EMG"};
+	private String  activeChannels = "EMG";//{"EMG",null,null,null,null,"BATTERY"};//{"EMG"};
 	private boolean[] channelsSelected = null;
 	private boolean isUpdatingConfiguration = false;
 	
@@ -404,7 +399,7 @@ public class NewConfigurationActivity extends Activity {
 						public void onClick(DialogInterface dialog, int which) {
 							
 							channelsSelected = displayChannelsListAdapter.getChecked();
-							String[] displayChannels = new String[8];
+							String displayChannels = "";
 	
 							if (numberOfChannelsSelected(channelsSelected) == 0){
 								displayChannelsTV.setText("");
@@ -420,11 +415,11 @@ public class NewConfigurationActivity extends Activity {
 								displayChannelsTV.setText(newConfiguration.getDisplayChannelsWithSensors());
 							}
 						}
-					private void convertBooleanToString(String[] channelsToDisplayArray, boolean[] channelsSelected) {
+					private void convertBooleanToString(String channelsToDisplayArray, boolean[] channelsSelected) {
 						for (int i = 0; i < channelsSelected.length; i++) {
 							if (channelsSelected[i]) {
 								int in = Character.getNumericValue((channels.get(i).toString().charAt(channels.get(i).toString().length() - 1)) - 1);
-								channelsToDisplayArray[in] = sensors.get(i);
+								channelsToDisplayArray += sensors.get(i);
 							}
 						}
 					}
@@ -452,10 +447,10 @@ public class NewConfigurationActivity extends Activity {
 	/**
 	 * Returns true if <b>no</b> channels are activated and false if there is at least one activated
 	 */
-	private boolean noChannelsActivated(String[] channelsActivated) {
+	private boolean noChannelsActivated(String channelsActivated) {
 		int counter = 0;
-		for (int i = 0; i < channelsActivated.length; i++) {
-			if (channelsActivated[i] != null)
+		for (int i = 0; i < channelsActivated.length(); i++) {
+			if (channelsActivated.substring(i, i + 1) != null)
 				counter++;
 		}
 		if (counter == 0){

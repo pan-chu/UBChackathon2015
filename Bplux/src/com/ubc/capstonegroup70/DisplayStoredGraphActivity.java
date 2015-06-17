@@ -1,30 +1,21 @@
 package com.ubc.capstonegroup70;
 
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Enumeration;
-import java.util.Scanner;
-import java.util.Vector;
-import java.util.Collections;
-import java.util.Random;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipFile;
-import java.lang.String;
-
-import android.view.ViewGroup;
-import android.widget.*;
-import com.bitalino.util.SensorDataConverter;
-
-//import com.example.bluetoothnew.R;
-import ceu.marten.bitadroid.R;
-import ceu.marten.model.Constants;
-import ceu.marten.model.io.DataManager;
-import ceu.marten.ui.NewRecordingActivity;
+import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.os.Environment;
+import android.os.Handler;
+import android.util.Log;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.TextView;
+import android.widget.VideoView;
 
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.GraphView.GraphViewData;
@@ -32,21 +23,30 @@ import com.jjoe64.graphview.GraphViewSeries;
 import com.jjoe64.graphview.LineGraphView;
 
 import org.apache.commons.math3.complex.Complex;
-import org.jtransforms.fft.*;
-import android.os.AsyncTask;
-import android.os.Bundle;
-import android.os.Environment;
-import android.os.Handler;
-import android.app.Activity;
-import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.Intent;
-import android.graphics.Color;
-import android.support.v4.app.NavUtils;
-import android.text.Html;
-import android.util.Log;
-import android.view.MenuItem;
-import android.view.View;
+import org.jtransforms.fft.DoubleFFT_1D;
+
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Enumeration;
+import java.util.Random;
+import java.util.Scanner;
+import java.util.Vector;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
+
+import ceu.marten.bitadroid.R;
+import ceu.marten.model.Constants;
+import ceu.marten.ui.NewRecordingActivity;
+
+//import com.example.bluetoothnew.R;
 
 /** 
  * Reads the data stored in a target recordings text file and plots
@@ -240,12 +240,16 @@ public class DisplayStoredGraphActivity extends Activity {
 	  // Format graph labels to show the appropriate domain on x-axis
 	  GraphView graphView = new LineGraphView(this, graphTitle) {
 		  protected String formatLabel(double value, boolean isValueX) {
+              Calendar c = Calendar.getInstance();
+              SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss");
+              String time = df.format(c.getTime());
 			  if (isValueX) {
 				  long xValue;
-				  if (value < 0.000){
+                   // unecessary because using Calendar now
+				  /*if (value < 0.000){
 					  xValue = 0;
 					  return "00:00:00";
-				  }
+				  }*/
 				  xValue = (long) value;
 				  if(dataSet == dataSetFFT || dataSet == dataSetPWR) {
 					  // Set x-axis to use the frequency domain
@@ -253,7 +257,8 @@ public class DisplayStoredGraphActivity extends Activity {
 				  }
 				  else {
 					  // Set the x-axis to use the time domain
-					  return String.format("%02d:%02d:%02d",(int) ((xValue / (samplingFrequency*60*60)) % 24), (int) ((xValue / (samplingFrequency*60)) % 60), (int) ((xValue / samplingFrequency)) % 60);
+					 // return String.format("%02d:%02d:%02d",(int) ((xValue / (samplingFrequency*60*60)) % 24), (int) ((xValue / (samplingFrequency*60)) % 60), (int) ((xValue / samplingFrequency)) % 60);
+                      return time;
 				  }						  
 					  
 			  } else {

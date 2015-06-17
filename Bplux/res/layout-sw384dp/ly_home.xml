@@ -59,4 +59,13 @@
         android:background="@drawable/button"
         android:layout_margin="10dp"/>
 
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Use Multi-Channel"
+        android:id="@+id/multiChannel"
+        android:layout_below="@+id/button3"
+        android:layout_centerHorizontal="true"
+        android:onClick="onCheckboxClicked"/>
+
 </RelativeLayout>

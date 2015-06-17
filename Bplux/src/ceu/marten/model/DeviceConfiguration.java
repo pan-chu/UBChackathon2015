@@ -1,15 +1,16 @@
 package ceu.marten.model;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-
 import android.content.Context;
-import ceu.marten.bitadroid.R;
-import ceu.marten.model.io.DatabaseHelper;
 
 import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+
+import ceu.marten.bitadroid.R;
+import ceu.marten.model.io.DatabaseHelper;
 
 /**
  * Represents a Bioplux device configuration Stored in Android's internal 
@@ -119,18 +120,18 @@ public class DeviceConfiguration implements Serializable {
 	/**
 	 * Sets the channels to display transforming String[8] to byte[]
 	 * 
-	 * @param displayChannelsB
+	 * @param displayChannels
 	 */
-	public void setDisplayChannels(String[] displayChannels) {
+	public void setDisplayChannels(String displayChannels) {
 		// transform String[] to StringBuilder and that to Byte[]
 		StringBuilder displayChannelsSB = new StringBuilder();
-		for (int i = 0; i < displayChannels.length; i++) {
-			displayChannelsSB.append(displayChannels[i]);
-			if (i != displayChannels.length - 1) {
-				// concatenate by this splitter '.'
-				displayChannelsSB.append("*.*");
-			}
-		}
+            for (int i = 0; i < displayChannels.length(); i++) {
+                displayChannelsSB.append(displayChannels.substring(i, i + 1));
+                if (i != displayChannels.length() - 1) {
+                    // concatenate by this splitter '.'
+                    displayChannelsSB.append("*.*");
+                }
+            }
 		this.displayChannels = displayChannelsSB.toString().getBytes();
 	}
 
@@ -210,14 +211,14 @@ public class DeviceConfiguration implements Serializable {
 	 * Sets the active channels for the configuration Transforms String[] to
 	 * Byte[] to save on internal DB
 	 */
-	public void setActiveChannels(String[] activeChannelsStr) {
+	public void setActiveChannels(String activeChannelsStr) {
 		StringBuilder activeChannelsSB = new StringBuilder();
-		for (int i = 0; i < activeChannelsStr.length; i++) {
-			activeChannelsSB.append(activeChannelsStr[i]);
-			if (i != activeChannelsStr.length - 1) {
-				activeChannelsSB.append("*.*");
-			}
-		}
+            for (int i = 0; i < activeChannelsSB.length(); i++) {
+                activeChannelsSB.append(activeChannelsSB.substring(i, i + 1));
+                if (i != activeChannelsStr.length() - 1) {
+                    activeChannelsSB.append("*.*");
+                }
+            }
 		this.activeChannels = activeChannelsSB.toString().getBytes();
 	}
 

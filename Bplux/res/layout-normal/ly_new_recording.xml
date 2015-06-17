@@ -17,21 +17,18 @@
             android:gravity="center"
             android:textColor="@android:color/white"
             android:textSize="20sp" />
-<!--
-        <FrameLayout
-            android:id="@+id/camera_preview"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_weight="1"
-            />
-            -->
 
-        <SurfaceView
-            android:id="@+id/CameraView"
-            android:layout_width="196dp"
-            android:layout_height="128dp"
-            android:orientation="vertical"
-            android:layout_alignParentEnd="true" />
+
+                <SurfaceView
+                    android:id="@+id/CameraView"
+                    android:layout_width="128dp"
+                    android:layout_height="96dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginRight="10dp"
+                    android:orientation="vertical" />
+
 
     </RelativeLayout>
 

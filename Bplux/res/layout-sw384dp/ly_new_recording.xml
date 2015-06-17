@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/button_header"
         android:paddingBottom="5dp"
-        android:paddingTop="5dp" >
+        android:paddingTop="5dp">
 
         <TextView
             android:id="@+id/nr_txt_recordingName"
@@ -18,21 +18,16 @@
             android:gravity="center"
             android:textColor="@android:color/white"
             android:textSize="20sp" />
-<!--
-        <FrameLayout
-            android:id="@+id/camera_preview"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_weight="1"
-            />
-            -->
-        <SurfaceView
-            android:id="@+id/CameraView"
-            android:layout_width="196dp"
-            android:layout_height="128dp"
-            android:orientation="vertical"
-            android:layout_alignParentEnd="true" />
 
+        <SurfaceView
+        android:id="@+id/CameraView"
+        android:layout_width="128dp"
+        android:layout_height="96dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        android:orientation="vertical" />
 
     </RelativeLayout>
 
@@ -51,8 +46,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:background="#fff"
-            android:orientation="vertical">
-        </LinearLayout>
+            android:orientation="vertical"></LinearLayout>
 
     </ScrollView>
 
@@ -63,7 +57,7 @@
         android:layout_height="fill_parent"
         android:gravity="bottom"
         android:orientation="vertical"
-        android:paddingTop="5dip" >
+        android:paddingTop="5dip">
 
         <ImageView
             android:layout_width="fill_parent"
@@ -84,13 +78,13 @@
             android:layout_marginRight="5dp"
             android:orientation="horizontal"
             android:paddingBottom="2dp"
-            android:paddingTop="5dip" >
+            android:paddingTop="5dip">
 
             <Button
                 android:id="@+id/nr_bttn_StartPause"
                 android:layout_width="fill_parent"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:background="@drawable/button_header"
                 android:onClick="onMainButtonClicked"
                 android:text="@string/nr_button_start"
