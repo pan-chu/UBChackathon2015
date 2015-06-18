@@ -58,6 +58,7 @@ import com.jjoe64.graphview.GraphView.GraphViewData;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import ceu.marten.bitadroid.R;
@@ -456,8 +457,11 @@ public class NewRecordingActivity extends Activity implements android.widget.Pop
         recorder.setProfile(cpHigh);
         extras = getIntent().getExtras();
         String name = extras.getString("recordingName");
+		Calendar c = Calendar.getInstance();
+		SimpleDateFormat df = new SimpleDateFormat("YYYY-MM-DD.HH.mm.ss");
+		String time = df.format(c.getTime());
         recorder.setOutputFile(Environment.getExternalStoragePublicDirectory(
-				Environment.DIRECTORY_DCIM).toString() + "/" + name + ".mp4");
+				Environment.DIRECTORY_DCIM).toString() + "/" + name + time + ".mp4");
         System.out.println("Output File: " + Environment.getExternalStorageDirectory()+toString() + "/" + name + ".mp4");
         recorder.setMaxDuration(50000);
         recorder.setMaxFileSize(5000000);
@@ -879,7 +883,7 @@ public class NewRecordingActivity extends Activity implements android.widget.Pop
 	/**
 	 * Stops and saves the recording in database and data as zip file
 	 */
-	private void stopRecording(){
+	private void stopRecording() {
 		savingDialog.show();
 		//stopChronometer();
 		sendRecordingDuration();
