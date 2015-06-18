@@ -840,11 +840,12 @@ public class NewRecordingActivity extends Activity implements android.widget.Pop
 								closeRecordingActivity = false;
 								savingDialogMessageChanged = false;
 								goToEnd = true;
+								/*
 								recorder.stop();
 								videoRecording = false;
 								initRecorder();
 								prepareRecorder();
-
+*/
 								// Reset activity content
 								View graphsView = findViewById(R.id.nr_graphs);
 								((ViewGroup) graphsView).removeAllViews();
@@ -853,8 +854,9 @@ public class NewRecordingActivity extends Activity implements android.widget.Pop
 								savingDialog.setProgress(0);
 								
 								startRecording();
+								/*
 								videoRecording = true;
-								recorder.start();
+								recorder.start(); */
 							}
 						});
 		builder.setNegativeButton(
@@ -893,8 +895,10 @@ public class NewRecordingActivity extends Activity implements android.widget.Pop
 		stopService(new Intent(NewRecordingActivity.this, BiopluxService.class));
 		uiMainbutton.setText(getString(R.string.nr_button_start));
 		drawState = true;
+		/*
 		recorder.stop();
 		videoRecording = false;
+		*/
 	}
 	
 	/**
@@ -1140,8 +1144,9 @@ public class NewRecordingActivity extends Activity implements android.widget.Pop
 			savingDialog.setProgress(0);
 			
 			startRecording();
+			/*
 			videoRecording = true;
-			recorder.start();
+			recorder.start(); */
 		// Stops recording
 		} else if (isServiceRunning()) {
 			recordingOverride = true;
