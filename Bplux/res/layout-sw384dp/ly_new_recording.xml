@@ -21,8 +21,8 @@
 
         <SurfaceView
         android:id="@+id/CameraView"
-        android:layout_width="128dp"
-        android:layout_height="96dp"
+        android:layout_width="196dp"
+        android:layout_height="147dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_marginEnd="10dp"
