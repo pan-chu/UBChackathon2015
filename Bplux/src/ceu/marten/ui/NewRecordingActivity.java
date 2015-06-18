@@ -424,7 +424,10 @@ public class NewRecordingActivity extends Activity implements android.widget.Pop
         // SETUP VIDEO
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
+		mCamera = Camera.open();
+		//Set preview with a 90¢X ortientation
+		mCamera.setDisplayOrientation(90);
+		mCamera.unlock();
         recorder = new MediaRecorder();
         /*mCamera = getCameraInstance();
         mCamera.unlock();
