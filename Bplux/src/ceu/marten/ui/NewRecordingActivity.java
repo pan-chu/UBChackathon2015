@@ -430,8 +430,8 @@ public class NewRecordingActivity extends Activity implements android.widget.Pop
 		mCamera.unlock();
         recorder = new MediaRecorder();
         /*mCamera = getCameraInstance();
-        mCamera.unlock();
-        recorder.setCamera(mCamera); */
+        mCamera.unlock(); */
+        recorder.setCamera(mCamera);
         initRecorder();
         setContentView(R.layout.ly_new_recording);
 
