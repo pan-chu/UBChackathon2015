@@ -456,7 +456,8 @@ public class NewRecordingActivity extends Activity implements android.widget.Pop
         recorder.setProfile(cpHigh);
         extras = getIntent().getExtras();
         String name = extras.getString("recordingName");
-        recorder.setOutputFile(Environment.getExternalStorageDirectory().toString() + "/" + name + ".mp4");
+        recorder.setOutputFile(Environment.getExternalStoragePublicDirectory(
+				Environment.DIRECTORY_DCIM).toString() + "/" + name + ".mp4");
         System.out.println("Output File: " + Environment.getExternalStorageDirectory()+toString() + "/" + name + ".mp4");
         recorder.setMaxDuration(50000);
         recorder.setMaxFileSize(5000000);
@@ -481,6 +482,7 @@ public class NewRecordingActivity extends Activity implements android.widget.Pop
 
     // TODO: comment this out when the main button works; can remove implementation of interface as well
     @Override
+	/*
     public void onClick(View v) {
         if (videoRecording) {
             recorder.stop();
@@ -493,6 +495,8 @@ public class NewRecordingActivity extends Activity implements android.widget.Pop
             recorder.start();
         }
     }
+    */
+
 
 	/** A safe way to get an instance of the Camera object. */
 	public static Camera getCameraInstance(){
