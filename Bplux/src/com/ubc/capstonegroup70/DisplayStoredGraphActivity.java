@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
@@ -14,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.VideoView;
 
@@ -30,10 +32,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
+import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.Vector;
@@ -216,96 +218,94 @@ public class DisplayStoredGraphActivity extends Activity {
 	}
 
 	private void graphData(final Vector<Double> dataSet, int viewPort, boolean withVideo) {
-	  System.out.println("Defining data set.");
-	  
-	  // Determine the appropriate graphSeries to add depending on dataSet that was passed
-	  GraphViewSeries graphSeries;
-	  TextView yAxisString = (TextView) findViewById(R.id.graph_yAxis);
-	  TextView xAxisString = (TextView) findViewById(R.id.graph_xAxis);
-	  if( dataSet == dataSetFFT ) {
-		  graphSeries = fftSeries;
-		  yAxisString.setText("Voltage\n(mV)");
-		  xAxisString.setText("Frequency (Hz)");
-	  }
-	 else if (dataSet == dataSetPWR ) {
-		 graphSeries = pwrSeries;
-		 yAxisString.setText("Power  \n(dB/Hz)");
-		 xAxisString.setText("Frequency (Hz)");
-	 }
-	 else {
-		  graphSeries = rawSeries;
-		  yAxisString.setText("Voltage\n(mV)");
-		  xAxisString.setText("Time (Hour:Minute:Second)");
-	  }
-	  // Format graph labels to show the appropriate domain on x-axis
-	  GraphView graphView = new LineGraphView(this, graphTitle) {
-		  protected String formatLabel(double value, boolean isValueX) {
-              Calendar c = Calendar.getInstance();
-              SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss");
-              String time = df.format(c.getTime());
-			  if (isValueX) {
-				  long xValue;
-                   // unecessary because using Calendar now
-				  /*if (value < 0.000){
-					  xValue = 0;
-					  return "00:00:00";
-				  }*/
-				  xValue = (long) value;
-				  if(dataSet == dataSetFFT || dataSet == dataSetPWR) {
-					  // Set x-axis to use the frequency domain
-					  return String.format("%d",(int) (xValue * samplingFrequency /dataSetRAW.size()));  
-				  }
-				  else {
-					  // Set the x-axis to use the time domain
-					 // return String.format("%02d:%02d:%02d",(int) ((xValue / (samplingFrequency*60*60)) % 24), (int) ((xValue / (samplingFrequency*60)) % 60), (int) ((xValue / samplingFrequency)) % 60);
-                      return time;
-				  }						  
-					  
-			  } else {
-				  if(dataSet == dataSetFFT || dataSet == dataSetPWR) {
-					  return String.format("%d", (int) value);
-				  }
-				  else
-					  return String.format("%.2f", (double) value);
+		System.out.println("Defining data set.");
+
+		// Determine the appropriate graphSeries to add depending on dataSet that was passed
+		GraphViewSeries graphSeries;
+		TextView yAxisString = (TextView) findViewById(R.id.graph_yAxis);
+		TextView xAxisString = (TextView) findViewById(R.id.graph_xAxis);
+		if( dataSet == dataSetFFT ) {
+			graphSeries = fftSeries;
+			yAxisString.setText("Voltage\n(mV)");
+			xAxisString.setText("Frequency (Hz)");
+		}
+		else if (dataSet == dataSetPWR ) {
+			graphSeries = pwrSeries;
+			yAxisString.setText("Power  \n(dB/Hz)");
+			xAxisString.setText("Frequency (Hz)");
+		}
+		else {
+			graphSeries = rawSeries;
+			yAxisString.setText("Voltage\n(mV)");
+			xAxisString.setText("Time (Hour:Minute:Second)");
+		}
+		// Format graph labels to show the appropriate domain on x-axis
+		GraphView graphView = new LineGraphView(this, graphTitle) {
+			protected String formatLabel(double value, boolean isValueX) {
+				if (isValueX) {
+					long xValue;
+					if (value < 0.000){
+						xValue = 0;
+						return "00:00:00";
+					}
+					xValue = (long) value;
+					if(dataSet == dataSetFFT || dataSet == dataSetPWR) {
+						// Set x-axis to use the frequency domain
+						return String.format("%d",(int) (xValue * samplingFrequency /dataSetRAW.size()));
+					}
+					else {
+						// Set the x-axis to use the time domain
+						return String.format("%02d:%02d:%02d",(int) ((xValue / (samplingFrequency*60*60)) % 24), (int) ((xValue / (samplingFrequency*60)) % 60), (int) ((xValue / samplingFrequency)) % 60);
+					}
+
+				} else {
+					if(dataSet == dataSetFFT || dataSet == dataSetPWR) {
+						return String.format("%d", (int) value);
+					}
+					else
+						return String.format("%.2f", (double) value);
+				}
 			}
-		  }
-	  };
-	  
-	  int yInterval = calculateYScale(dataSet);
-	  int yLabel = max;
-	  while ((yLabel-min) % yInterval != 0) {
-	  	yLabel++;
-	  }
-	    
-	    // Calculate appropriate interval value in x-direction
-	  int xInterval = calculateXScale(dataSet);	  
-	  int xLabel = dataSet.size();
-	  while (xLabel % xInterval != 0) {
-	  	xLabel++;
-	  }
-	  
-	  graphView.addSeries(graphSeries);
-	  ((LineGraphView) graphView).setDrawBackground(false);
-	  
-	  // Settings for the graph to be scrollable and scalable
-	  graphView.setScalable(true);  
-	  graphView.setScrollable(true);
-	  // Settings for graph view port size
-	  if (dataSet.size() < viewPort)
-	  	graphView.setViewPort(0,dataSet.size());
-	  else
-	  	graphView.setViewPort(0, viewPort);
+		};
+
+		int yInterval = calculateYScale(dataSet);
+		int yLabel = max;
+		while ((yLabel-min) % yInterval != 0) {
+			yLabel++;
+		}
+
+		// Calculate appropriate interval value in x-direction
+		int xInterval = calculateXScale(dataSet);
+		int xLabel = dataSet.size();
+		while (xLabel % xInterval != 0) {
+			xLabel++;
+		}
+
+		graphView.addSeries(graphSeries);
+		((LineGraphView) graphView).setDrawBackground(false);
+
+		// Settings for the graph to be scrollable and scalable
+		graphView.setScalable(!withVideo);
+		graphView.setScrollable(!withVideo);
+		// Settings for graph view port size
+		if (dataSet.size() < viewPort || withVideo)
+			graphView.setViewPort(0,dataSet.size());
+		else
+			graphView.setViewPort(0, viewPort);
 //	  graphView
-	  // Settings for the graph styling
-	  graphView.setManualYAxisBounds(yLabel, min);
-	  graphView.getGraphViewStyle().setGridColor(Color.BLACK);
-	  graphView.getGraphViewStyle().setHorizontalLabelsColor(Color.BLACK);
-	  graphView.getGraphViewStyle().setVerticalLabelsColor(Color.BLACK);
-	  graphView.getGraphViewStyle().setVerticalLabelsWidth(80);
+		// Settings for the graph styling
+		graphView.setManualYAxisBounds(yLabel, min);
+		graphView.getGraphViewStyle().setGridColor(Color.BLACK);
+		graphView.getGraphViewStyle().setHorizontalLabelsColor(Color.BLACK);
+		graphView.getGraphViewStyle().setVerticalLabelsColor(Color.BLACK);
+		graphView.getGraphViewStyle().setVerticalLabelsWidth(80);
 
 		LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(
 				LinearLayout.LayoutParams.MATCH_PARENT,
 				LinearLayout.LayoutParams.MATCH_PARENT, withVideo ? 0.5f : 1.0f);
+
+		if (withVideo)
+			param.bottomMargin = 20;
 
 		graphView.setLayoutParams(param);
 
@@ -314,41 +314,143 @@ public class DisplayStoredGraphActivity extends Activity {
 		layout.removeAllViews();
 
 
-	 	// if withVideo then add videoView
-		if (withVideo) {
+		final SeekBar seekBar = new SeekBar(this, null, android.R.attr.progressBarStyleHorizontal);
+		LinearLayout.LayoutParams seekBarParams = new LinearLayout.LayoutParams(
+				LinearLayout.LayoutParams.MATCH_PARENT,
+				LinearLayout.LayoutParams.WRAP_CONTENT);
+		seekBarParams.leftMargin = graphView.getGraphViewStyle().getVerticalLabelsWidth();
 
-			File dcimDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM);
-			String videoPath = "";
+		seekBar.setLayoutParams(seekBarParams);
 
-			// TODO currently we're just grabbing the first video that we find - should be able to just use recordingName.substring(0, recordingName.lastIndexOf('.')
-			for (File file : dcimDir.listFiles())
+		File dcimDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM);
+		String videoPath = "";
+
+		// TODO currently we're just grabbing the first video that we find - should be able to just use recordingName.substring(0, recordingName.lastIndexOf('.')
+		for (File file : dcimDir.listFiles())
+		{
+			final String videoFilePath = file.getPath();
+			if (videoFilePath.endsWith(".mp4") && (videoFilePath.equals(recordingName.substring(0, recordingName.lastIndexOf('.')))))
 			{
-				if (file.getPath().endsWith(".mp4"))
-				{
-					videoPath = file.getPath();
-					break;
-				}
+				videoPath = file.getPath();
+				break;
 			}
+		}
 
-			VideoView videoView = new VideoView(this);
+		// if withVideo then add videoView
+		if (withVideo && !videoPath.isEmpty()) {
 
-			LinearLayout.LayoutParams videoParams = new LinearLayout.LayoutParams(
+			final RelativeLayout relativeLayout = new RelativeLayout(this);
+			LinearLayout.LayoutParams rlayoutParams = new LinearLayout.LayoutParams(
 					LinearLayout.LayoutParams.MATCH_PARENT,
 					LinearLayout.LayoutParams.MATCH_PARENT, 0.5f);
+			relativeLayout.setLayoutParams(rlayoutParams);
+
+			final VideoView videoView = new VideoView(this);
+
+			RelativeLayout.LayoutParams videoParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+			videoParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
+			videoParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+			videoParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+			videoParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
 
 			videoView.setLayoutParams(videoParams);
 
-			layout.addView(videoView);
 
 			videoView.setVideoPath(videoPath);
-			videoView.start();
-		}
 
-		layout.addView(graphView);
+			MediaPlayer mp = MediaPlayer.create(this, Uri.parse(videoPath));
+			final int totalDuration = mp.getDuration();
+			mp.release();
+
+			seekBar.setMax(totalDuration);
+
+
+			final List<Boolean> videoFinished = new ArrayList<>();
+			videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+				@Override
+				public void onCompletion(MediaPlayer mp) {
+					videoFinished.add(true);
+					seekBar.setProgress(seekBar.getMax());
+				}
+			});
+
+			videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+				@Override
+				public void onPrepared(final MediaPlayer mp) {
+					if (seekBar.getMax() != mp.getDuration())
+					{
+						seekBar.setMax(mp.getDuration());
+					}
+				}
+			});
+
+			final Runnable videoProgressChecker = new Runnable() {
+				@Override
+				public void run() {
+					while (videoFinished.size() < 1)
+					{
+						seekBar.setProgress(videoView.getCurrentPosition());
+					}
+				}
+			};
+
+			seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+				@Override
+				public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+					if (fromUser)
+					{
+						videoView.seekTo(progress);
+						if (!videoView.isPlaying())
+						{
+							videoView.start();
+							videoFinished.clear();
+							new Thread(videoProgressChecker).start();
+						}
+					}
+				}
+
+				@Override
+				public void onStartTrackingTouch(SeekBar seekBar) {
+					// auto generated
+				}
+
+				@Override
+				public void onStopTrackingTouch(SeekBar seekBar) {
+					// auto generated
+				}
+			});
+
+			new Thread(videoProgressChecker).start();
+
+			layout.addView(videoView);
+			layout.addView(graphView);
+			layout.addView(seekBar);
+
+			videoView.setOnTouchListener(new View.OnTouchListener() {
+				@Override
+				public boolean onTouch(View v, MotionEvent event) {
+					if (videoView.isPlaying())
+					{
+						videoView.pause();
+					}
+					else
+					{
+						videoView.start();
+					}
+					return true;
+				}
+			});
+
+		}
+		else
+		{
+			layout.addView(graphView);
+		}
 
 	}
 
-	
+
+
 	private int calculateYScale(Vector<Double> dataSet) {
 		// Calculate range of y values
 		double yBounds[] = {0,0};
