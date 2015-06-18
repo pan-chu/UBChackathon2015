@@ -426,21 +426,22 @@ public class NewRecordingActivity extends Activity implements android.widget.Pop
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		mCamera = Camera.open();
-		//Set preview with a 90¢X ortientation
 		mCamera.setDisplayOrientation(90);
+
 		mCamera.unlock();
         recorder = new MediaRecorder();
         /*mCamera = getCameraInstance();
         mCamera.unlock(); */
         recorder.setCamera(mCamera);
+
         initRecorder();
-        setContentView(R.layout.ly_new_recording);
+		setContentView(R.layout.ly_new_recording);
 
         SurfaceView cameraView = (SurfaceView) findViewById(R.id.CameraView);
         holder = cameraView.getHolder();
         holder.addCallback(this);
         holder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
         cameraView.setClickable(true);
         cameraView.setOnClickListener(this);
@@ -450,6 +451,7 @@ public class NewRecordingActivity extends Activity implements android.widget.Pop
     private void initRecorder() {
         recorder.setAudioSource(MediaRecorder.AudioSource.DEFAULT);
         recorder.setVideoSource(MediaRecorder.VideoSource.DEFAULT);
+		recorder.setOrientationHint(90);
         // recorder.setAudioSource(MediaRecorder.AudioSource.CAMCORDER);
         // recorder.setVideoSource(MediaRecorder.VideoSource.CAMERA);
 
