@@ -16,6 +16,14 @@
     <shared>
       <config />
     </shared>
+    <layouts>
+      <layout url="file://$PROJECT_DIR$/Bplux/res/layout-normal/ly_new_recording.xml">
+        <config>
+          <state>Landscape</state>
+          <theme>@style/AppTheme</theme>
+        </config>
+      </layout>
+    </layouts>
   </component>
   <component name="AndroidLogFilters">
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="app: ceu.marten.bitadroid" />
@@ -48,11 +56,24 @@
       <file leaf-file-name="NewRecordingActivity.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Bplux/src/ceu/marten/ui/NewRecordingActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="3.40625" vertical-offset="2014" max-vertical-offset="23237">
-              <caret line="219" column="37" selection-start-line="219" selection-start-column="37" selection-end-line="219" selection-end-column="37" />
+            <state vertical-scroll-proportion="0.8255613" vertical-offset="22569" max-vertical-offset="23788">
+              <caret line="1229" column="35" selection-start-line="1229" selection-start-column="35" selection-end-line="1229" selection-end-column="35" />
               <folding>
-                <element signature="e#0#42578#0" expanded="true" />
                 <element signature="imports" expanded="true" />
+                <element signature="e#24487#24744#0" expanded="true" />
+                <element signature="e#24735#24736#0" expanded="true" />
+                <element signature="e#24831#24970#0" expanded="true" />
+                <element signature="e#24963#24964#0" expanded="true" />
+                <element signature="e#25892#26185#0" expanded="true" />
+                <element signature="e#26178#26179#0" expanded="true" />
+                <element signature="e#26272#26411#0" expanded="true" />
+                <element signature="e#26404#26405#0" expanded="true" />
+                <element signature="e#27197#27382#0" expanded="true" />
+                <element signature="e#27375#27376#0" expanded="true" />
+                <element signature="e#28351#29422#0" expanded="true" />
+                <element signature="e#29413#29414#0" expanded="true" />
+                <element signature="e#29509#29648#0" expanded="true" />
+                <element signature="e#29641#29642#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -76,15 +97,15 @@
     <option name="changedFiles">
       <list>
         <option value="$PROJECT_DIR$/Bplux/AndroidManifest.xml" />
-        <option value="$PROJECT_DIR$/Bplux/src/ceu/marten/ui/NewRecordingActivity.java" />
-        <option value="$PROJECT_DIR$/Bplux/res/layout-normal/ly_new_recording.xml" />
-        <option value="$PROJECT_DIR$/Bplux/res/layout-sw384dp/ly_new_recording.xml" />
-        <option value="$PROJECT_DIR$/Bplux/src/com/ubc/capstonegroup70/DisplayStoredGraphActivity.java" />
         <option value="$PROJECT_DIR$/Bplux/src/ceu/marten/ui/HomeActivity.java" />
         <option value="$PROJECT_DIR$/Bplux/src/ceu/marten/model/DeviceConfiguration.java" />
         <option value="$PROJECT_DIR$/Bplux/src/ceu/marten/ui/NewConfigurationActivity.java" />
         <option value="$PROJECT_DIR$/Bplux/res/layout-normal/ly_home.xml" />
         <option value="$PROJECT_DIR$/Bplux/res/layout-sw384dp/ly_home.xml" />
+        <option value="$PROJECT_DIR$/Bplux/src/com/ubc/capstonegroup70/DisplayStoredGraphActivity.java" />
+        <option value="$PROJECT_DIR$/Bplux/src/ceu/marten/ui/NewRecordingActivity.java" />
+        <option value="$PROJECT_DIR$/Bplux/res/layout-normal/ly_new_recording.xml" />
+        <option value="$PROJECT_DIR$/Bplux/res/layout-sw384dp/ly_new_recording.xml" />
       </list>
     </option>
   </component>
@@ -129,8 +150,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="AndroidView" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -286,6 +305,8 @@
         </subPane>
       </pane>
       <pane id="PackagesPane" />
+      <pane id="AndroidView" />
+      <pane id="Scope" />
       <pane id="Scratches" />
     </panes>
   </component>
@@ -550,7 +571,6 @@
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.29899856" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.18191057" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.23170732" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3821138" sideWeight="0.48027718" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.35264227" sideWeight="0.5405117" order="9" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2238806" sideWeight="0.26844585" order="2" side_tool="true" content_ui="tabs" />
@@ -574,6 +594,7 @@
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.23170732" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -627,14 +648,14 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Bplux/res/layout/display_stored_graph_activity.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="1729" max-vertical-offset="2071">
           <caret line="91" column="27" selection-start-line="91" selection-start-column="27" selection-end-line="91" selection-end-column="27" />
           <folding />
         </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Bplux/src/ceu/marten/ui/NewRecordingActivity.java">
@@ -642,24 +663,37 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="7239" max-vertical-offset="22059">
           <caret line="381" column="38" selection-start-line="381" selection-start-column="38" selection-end-line="381" selection-end-column="38" />
           <folding>
-            <element signature="e#0#42578#0" expanded="true" />
             <element signature="imports" expanded="true" />
+            <element signature="e#24487#24744#0" expanded="true" />
+            <element signature="e#24735#24736#0" expanded="true" />
+            <element signature="e#24831#24970#0" expanded="true" />
+            <element signature="e#24963#24964#0" expanded="true" />
+            <element signature="e#25892#26185#0" expanded="true" />
+            <element signature="e#26178#26179#0" expanded="true" />
+            <element signature="e#26272#26411#0" expanded="true" />
+            <element signature="e#26404#26405#0" expanded="true" />
+            <element signature="e#27197#27382#0" expanded="true" />
+            <element signature="e#27375#27376#0" expanded="true" />
+            <element signature="e#28351#29422#0" expanded="true" />
+            <element signature="e#29413#29414#0" expanded="true" />
+            <element signature="e#29509#29648#0" expanded="true" />
+            <element signature="e#29641#29642#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Bplux/res/layout-normal/ly_new_recording.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1843">
           <caret line="16" column="36" selection-start-line="16" selection-start-column="36" selection-end-line="16" selection-end-column="36" />
           <folding>
-            <element signature="e#2206#2237#0" expanded="true" />
-            <element signature="e#3222#3247#0" expanded="true" />
+            <element signature="e#2235#2266#0" expanded="true" />
+            <element signature="e#3251#3276#0" expanded="true" />
           </folding>
         </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Bplux/src/ceu/marten/ui/HomeActivity.java">
@@ -727,25 +761,25 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Bplux/res/layout-sw384dp/ly_patientsession.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-9.553572" vertical-offset="0" max-vertical-offset="0">
           <caret line="59" column="37" selection-start-line="59" selection-start-column="37" selection-end-line="59" selection-end-column="37" />
           <folding />
         </state>
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Bplux/res/layout-normal/ly_patientsession.xml">
       <provider editor-type-id="android-designer">
         <state />
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Bplux/res/layout-normal/ly_patientsession.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-0.66071427" vertical-offset="0" max-vertical-offset="0">
           <caret line="43" column="25" selection-start-line="43" selection-start-column="25" selection-end-line="43" selection-end-column="25" />
           <folding />
         </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Bplux/res/values/strings.xml">
@@ -784,25 +818,25 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Bplux/res/layout-normal/in_ly_graph.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.16605166" vertical-offset="0" max-vertical-offset="0">
           <caret line="6" column="34" selection-start-line="6" selection-start-column="34" selection-end-line="6" selection-end-column="34" />
           <folding />
         </state>
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Bplux/res/layout-normal/in_ly_graph_details.xml">
       <provider editor-type-id="android-designer">
         <state />
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Bplux/res/layout-normal/in_ly_graph_details.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.4704797" vertical-offset="0" max-vertical-offset="0">
           <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
           <folding />
         </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Bplux/src/ceu/marten/model/Constants.java">
@@ -814,21 +848,20 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Bplux/res/layout/display_stored_graph_activity.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="1729" max-vertical-offset="2071">
           <caret line="91" column="27" selection-start-line="91" selection-start-column="27" selection-end-line="91" selection-end-column="27" />
           <folding />
         </state>
       </provider>
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Bplux/res/drawable-hdpi/button_header.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="479">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -970,9 +1003,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-10.620689" vertical-offset="3074" max-vertical-offset="5263">
           <caret line="213" column="25" selection-start-line="213" selection-start-column="16" selection-end-line="213" selection-end-column="25" />
-          <folding>
-            <element signature="e#6783#6792#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -980,27 +1010,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-9.310345" vertical-offset="7653" max-vertical-offset="12407">
           <caret line="447" column="80" selection-start-line="447" selection-start-column="80" selection-end-line="447" selection-end-column="80" />
-          <folding>
-            <element signature="e#9740#9782#0" expanded="true" />
-            <element signature="e#10066#10108#0" expanded="true" />
-            <element signature="e#12517#12553#0" expanded="true" />
-            <element signature="e#15844#15852#0" expanded="true" />
-            <element signature="e#15938#15946#0" expanded="true" />
-            <element signature="e#16239#16276#0" expanded="true" />
-            <element signature="e#16659#16703#0" expanded="true" />
-            <element signature="e#16957#17002#0" expanded="true" />
-            <element signature="e#18271#18316#0" expanded="true" />
-            <element signature="e#18318#18476#0" expanded="true" />
-            <element signature="e#18469#18470#0" expanded="true" />
-            <element signature="e#20943#20994#0" expanded="true" />
-            <element signature="e#21258#21304#0" expanded="true" />
-            <element signature="e#23328#23380#0" expanded="true" />
-            <element signature="e#23696#23752#0" expanded="true" />
-            <element signature="e#25180#25215#0" expanded="true" />
-            <element signature="e#25339#25375#0" expanded="true" />
-            <element signature="e#26196#26232#0" expanded="true" />
-            <element signature="e#27076#27131#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1018,74 +1027,85 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Bplux/src/com/ubc/capstonegroup70/DisplayStoredGraphActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="2.2037997" vertical-offset="3531" max-vertical-offset="12559">
-          <caret line="253" column="70" selection-start-line="253" selection-start-column="70" selection-end-line="253" selection-end-column="70" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#2057#2065#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Bplux/res/layout-sw384dp/ly_home.xml">
-      <provider editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="750" max-vertical-offset="1444">
-          <caret line="68" column="45" selection-start-line="68" selection-start-column="45" selection-end-line="68" selection-end-column="45" />
-          <folding />
-        </state>
-      </provider>
-      <provider selected="true" editor-type-id="android-designer">
+    <entry file="file://$PROJECT_DIR$/Bplux/res/layout-normal/ly_home.xml">
+      <provider editor-type-id="android-designer">
         <state />
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Bplux/res/layout-normal/ly_home.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.62413794" vertical-offset="854" max-vertical-offset="1444">
           <caret line="64" column="41" selection-start-line="64" selection-start-column="41" selection-end-line="64" selection-end-column="41" />
           <folding />
         </state>
       </provider>
-      <provider editor-type-id="android-designer">
-        <state />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Bplux/src/com/ubc/capstonegroup70/DisplayStoredGraphActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-13.965517" vertical-offset="8259" max-vertical-offset="14402">
+          <caret line="465" column="9" selection-start-line="465" selection-start-column="9" selection-end-line="465" selection-end-column="9" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#14006#14253#0" expanded="true" />
+            <element signature="e#14247#14248#0" expanded="true" />
+          </folding>
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Bplux/res/layout-sw384dp/ly_new_recording.xml">
-      <provider editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.0" vertical-offset="254" max-vertical-offset="1919">
-          <caret line="21" column="8" selection-start-line="21" selection-start-column="8" selection-end-line="21" selection-end-column="8" />
-          <folding>
-            <element signature="e#2119#2150#0" expanded="true" />
-            <element signature="e#3134#3159#0" expanded="true" />
-          </folding>
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5448276" vertical-offset="482" max-vertical-offset="1919">
+          <caret line="42" column="8" selection-start-line="41" selection-start-column="0" selection-end-line="49" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
-      <provider selected="true" editor-type-id="android-designer">
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Bplux/res/layout-sw384dp/ly_home.xml">
+      <provider editor-type-id="android-designer">
         <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.93448275" vertical-offset="750" max-vertical-offset="1444">
+          <caret line="68" column="45" selection-start-line="68" selection-start-column="45" selection-end-line="68" selection-end-column="45" />
+          <folding />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Bplux/res/layout-normal/ly_new_recording.xml">
-      <provider editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="161" max-vertical-offset="1938">
-          <caret line="18" column="38" selection-start-line="18" selection-start-column="38" selection-end-line="18" selection-end-column="38" />
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3321234" vertical-offset="615" max-vertical-offset="1938">
+          <caret line="42" column="0" selection-start-line="42" selection-start-column="0" selection-end-line="42" selection-end-column="61" />
           <folding>
-            <element signature="e#2206#2237#0" expanded="true" />
-            <element signature="e#3222#3247#0" expanded="true" />
+            <element signature="e#2235#2266#0" expanded="true" />
+            <element signature="e#3251#3276#0" expanded="true" />
           </folding>
         </state>
-      </provider>
-      <provider selected="true" editor-type-id="android-designer">
-        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Bplux/src/ceu/marten/ui/NewRecordingActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="3.40625" vertical-offset="2014" max-vertical-offset="23237">
-          <caret line="219" column="37" selection-start-line="219" selection-start-column="37" selection-end-line="219" selection-end-column="37" />
+        <state vertical-scroll-proportion="0.8255613" vertical-offset="22569" max-vertical-offset="23788">
+          <caret line="1229" column="35" selection-start-line="1229" selection-start-column="35" selection-end-line="1229" selection-end-column="35" />
           <folding>
-            <element signature="e#0#42578#0" expanded="true" />
             <element signature="imports" expanded="true" />
+            <element signature="e#24487#24744#0" expanded="true" />
+            <element signature="e#24735#24736#0" expanded="true" />
+            <element signature="e#24831#24970#0" expanded="true" />
+            <element signature="e#24963#24964#0" expanded="true" />
+            <element signature="e#25892#26185#0" expanded="true" />
+            <element signature="e#26178#26179#0" expanded="true" />
+            <element signature="e#26272#26411#0" expanded="true" />
+            <element signature="e#26404#26405#0" expanded="true" />
+            <element signature="e#27197#27382#0" expanded="true" />
+            <element signature="e#27375#27376#0" expanded="true" />
+            <element signature="e#28351#29422#0" expanded="true" />
+            <element signature="e#29413#29414#0" expanded="true" />
+            <element signature="e#29509#29648#0" expanded="true" />
+            <element signature="e#29641#29642#0" expanded="true" />
           </folding>
         </state>
       </provider>

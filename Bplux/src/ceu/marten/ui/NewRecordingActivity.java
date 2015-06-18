@@ -58,6 +58,7 @@ import com.jjoe64.graphview.GraphView.GraphViewData;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import ceu.marten.bitadroid.R;
@@ -425,8 +426,8 @@ public class NewRecordingActivity extends Activity implements android.widget.Pop
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		mCamera = Camera.open();
-		//Set preview with a 90¢X ortientation
-		mCamera.setDisplayOrientation(90);
+		//Set preview with a 90 ortientation
+		// mCamera.setDisplayOrientation(90);
 		mCamera.unlock();
         recorder = new MediaRecorder();
         /*mCamera = getCameraInstance();
@@ -439,7 +440,7 @@ public class NewRecordingActivity extends Activity implements android.widget.Pop
         holder = cameraView.getHolder();
         holder.addCallback(this);
         holder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
         cameraView.setClickable(true);
         cameraView.setOnClickListener(this);
@@ -456,7 +457,10 @@ public class NewRecordingActivity extends Activity implements android.widget.Pop
         recorder.setProfile(cpHigh);
         extras = getIntent().getExtras();
         String name = extras.getString("recordingName");
-        recorder.setOutputFile(Environment.getExternalStorageDirectory().toString() + "/" + name + ".mp4");
+        Calendar c = Calendar.getInstance();
+       SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd.HH.mm.ss");
+        String time = df.format(c.getTime());
+        recorder.setOutputFile(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).toString() + "/" + name + time + ".mp4");
         System.out.println("Output File: " + Environment.getExternalStorageDirectory()+toString() + "/" + name + ".mp4");
         recorder.setMaxDuration(50000);
         recorder.setMaxFileSize(5000000);
@@ -482,6 +486,7 @@ public class NewRecordingActivity extends Activity implements android.widget.Pop
     // TODO: comment this out when the main button works; can remove implementation of interface as well
     @Override
     public void onClick(View v) {
+        /*
         if (videoRecording) {
             recorder.stop();
             videoRecording = false;
@@ -492,6 +497,7 @@ public class NewRecordingActivity extends Activity implements android.widget.Pop
             videoRecording = true;
             recorder.start();
         }
+        */
     }
 
 	/** A safe way to get an instance of the Camera object. */
@@ -1221,6 +1227,7 @@ public class NewRecordingActivity extends Activity implements android.widget.Pop
             recorder.reset();   // clear recorder configuration
             recorder.release(); // release the recorder object
             recorder = null;
+            videoRecording = false;
         }
     }
 

@@ -39,8 +39,8 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/shadow"
-        android:layout_marginBottom="60dip"
-        android:fillViewport="true">
+        android:layout_marginBottom="60dip">
+<!-- removed  android:fillViewport="true" from ScrollView -->
 
         <LinearLayout
             android:id="@+id/nr_graphs"
