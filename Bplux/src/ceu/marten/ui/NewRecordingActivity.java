@@ -68,29 +68,29 @@ import ceu.marten.model.DeviceRecording;
 import ceu.marten.model.io.DataManager;
 import ceu.marten.model.io.DataManagerHelper;
 import ceu.marten.services.BiopluxService;
-
+import android.widget.PopupMenu.OnMenuItemClickListener;
 /**
  * Used to record a session based on a configuration and display the
  * corresponding channels or if only one is to be displayed it shows the
  * configuration' details. Connects to a Bioplux service
- * 
+ *
  * @author Carlos Marten
- * 
+ *
  */
-public class NewRecordingActivity extends Activity implements android.widget.PopupMenu.OnMenuItemClickListener, OnSharedPreferenceChangeListener, View.OnClickListener, SurfaceHolder.Callback {
+public class NewRecordingActivity extends Activity implements OnMenuItemClickListener, OnSharedPreferenceChangeListener, View.OnClickListener, SurfaceHolder.Callback {
 
-	
+
 	public double cal_num=0;
 	public boolean first=true;
-	
+
 	private static final String TAG = NewRecordingActivity.class.getName();
-	
+
 	// Keys used for communication with activity
 	public static final String KEY_DURATION = "duration";
 	public static final String KEY_RECORDING_NAME = "recordingName";
 	public static final String KEY_CONFIGURATION = "configSelected";
 	public static final String KEY_END = "recordingEnded";
-	
+
 	// key for recovery. Used when android kills activity
 	public static final String KEY_CHRONOMETER_BASE = "chronometerBase";
 
@@ -105,7 +105,7 @@ public class NewRecordingActivity extends Activity implements android.widget.Pop
 
 
 	// 10 seconds
-	private  final int maxDataCount = 10000; 
+	private  final int maxDataCount = 10000;
 
 
 	// Android's widgets
@@ -118,39 +118,39 @@ public class NewRecordingActivity extends Activity implements android.widget.Pop
 	// DIALOGS
 	private  AlertDialog connectionErrorDialog;
 	private  ProgressDialog savingDialog;
-	
+
 	// AUX VARIABLES
 	private Context classContext = this;
 	private Bundle extras;
 	private LayoutInflater inflater;
-	
+
 	private DeviceConfiguration recordingConfiguration;
 	private DeviceRecording recording;
-	
+
 	private Graph[] graphs;
 	private int[] displayChannelPosition;
 	private int currentZoomValue = 0;
-	private String duration = null; 
+	private String duration = null;
 	private SharedPreferences sharedPref = null;
 	private String patientFName = "DEFAULT";
 	private String patientLName = "DEFAULT";
 //	private String patientHealthNumber = "1234567890";
-	
+
 	private boolean isServiceBounded = false;
 	private boolean recordingOverride = false;
 	private boolean savingDialogMessageChanged = false;
 	private boolean closeRecordingActivity = false;
 	private boolean drawState = true; //true -> Enable | false -> Disable
 	private boolean goToEnd = true;
-	
+
 	// ERROR VARIABLES
 	private int bpErrorCode   = 0;
 	private boolean serviceError = false;
 	private boolean connectionError = false;
-	
-	
+
+
 	public static boolean btConnectError = false;
-	
+
 	// MESSENGERS USED TO COMMUNICATE ACTIVITY AND SERVICE
 	private Messenger serviceMessenger = null;
 	private final Messenger activityMessenger = new Messenger(new IncomingHandler());
@@ -204,7 +204,7 @@ public class NewRecordingActivity extends Activity implements android.widget.Pop
     /**
 	 * Handler that receives messages from the service. It receives frames data,
 	 * error messages and a saved message if service stops correctly
-	 * 
+	 *
 	 */
 
 	@SuppressLint("HandlerLeak")
@@ -223,8 +223,8 @@ public class NewRecordingActivity extends Activity implements android.widget.Pop
 				//	calibrate(msg.getData().getDouble(BiopluxService.KEY_X_VALUE),msg.getData().getDoubleArray(BiopluxService.KEY_FRAME_DATA));
 				//	first = false;
 				//}
-						
-				//else 
+
+				//else
 				appendDataToGraphs(
 						msg.getData().getDouble(BiopluxService.KEY_X_VALUE),
 						msg.getData().getDoubleArray(BiopluxService.KEY_FRAME_DATA));
@@ -283,7 +283,7 @@ public class NewRecordingActivity extends Activity implements android.widget.Pop
 				displayConnectionErrorDialog(10); // 10 -> fatal error
 			}
 		}
-		
+
 		/**
 		 *  This is called when the connection with the service has been
 		 *  unexpectedly disconnected -- that is, its process crashed.
@@ -308,20 +308,20 @@ public class NewRecordingActivity extends Activity implements android.widget.Pop
 			}
 		}
 	}*/
-	
+
 	void appendDataToGraphs(double xValue, double[] data) {
 		if(!serviceError){
 			for (int i = 0; i < graphs.length; i++) {
-				//if (recordingConfiguration.getMacAddress().equals("EMG_Sensor")) 
+				//if (recordingConfiguration.getMacAddress().equals("EMG_Sensor"))
 				//	graphs[i].getSerie().appendData(new GraphViewData(xValue,((data[displayChannelPosition[i]])-cal_num)*5), goToEnd, maxDataCount);//*5
-				
-				//else 
+
+				//else
 				graphs[i].getSerie().appendData(new GraphViewData(xValue,data[displayChannelPosition[i]]), goToEnd, maxDataCount);
 				//System.out.println(xValue + " : " + data[displayChannelPosition[i]]);
 			}
 		}
 	}
-	
+
 	/*void calibrate(double xValue, double[]data){
 		if(!serviceError){
 			for (int i = 0; i < graphs.length; i++) {
@@ -331,7 +331,7 @@ public class NewRecordingActivity extends Activity implements android.widget.Pop
 		cal_num=(cal_num/graphs.length);
 		//Toast.makeText(getApplicationContext(), " "+cal_num,Toast.LENGTH_SHORT).show();
 	}*/
-	
+
 
 	/**
 	 * Sends recording duration to the service by message when recording is
@@ -360,7 +360,7 @@ public class NewRecordingActivity extends Activity implements android.widget.Pop
 			}
 		}else{Log.e(TAG, "Error sending duration to service");}
 	}
-	
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -380,7 +380,7 @@ public class NewRecordingActivity extends Activity implements android.widget.Pop
 		// INIT GLOBAL VARIABLES
 		savingDialog = new ProgressDialog(classContext);
 		savingDialog.setTitle(getString(R.string.nr_saving_dialog_title));
-		savingDialog.setMessage(getString(R.string.nr_saving_dialog_adding_header_message)); 
+		savingDialog.setMessage(getString(R.string.nr_saving_dialog_adding_header_message));
 		savingDialog.setCancelable(false);
 		savingDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
 		savingDialog.setProgress(0); //starts with 0%
@@ -388,17 +388,17 @@ public class NewRecordingActivity extends Activity implements android.widget.Pop
 		patientFName = extras.getString("patientFName");
 		patientLName = extras.getString("patientLName");
 //		patientHealthNumber = extras.getString("PHN");
-		
+
 		inflater = this.getLayoutInflater();
 		sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
 		currentZoomValue = Integer.valueOf(sharedPref.getString(SettingsActivity.KEY_PREF_ZOOM_VALUE, "150"));
 		graphs = new Graph[recordingConfiguration.getDisplayChannelsNumber()];
-		
+
 
 		// Used to update zoom values
 		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
 	    settings.registerOnSharedPreferenceChangeListener(this);
-		
+
 		// calculates the display channel position of frame received
 		displayChannelPosition = new int[recordingConfiguration.getDisplayChannels().size()];
 		int displayIterator = 0;
@@ -409,16 +409,16 @@ public class NewRecordingActivity extends Activity implements android.widget.Pop
 				displayIterator++;
 			}
 		}
-		
+
 		// INIT ANDROID' WIDGETS
 		uiRecordingName = (TextView) findViewById(R.id.nr_txt_recordingName);
 //		uiRecordingName.setText(recording.getName());
 		uiRecordingName.setText("Recording session for " + this.patientFName + " " + this.patientLName);
 		uiMainbutton = (Button) findViewById(R.id.nr_bttn_StartPause);
 		chronometer = new Chronometer(classContext);
-		
+
 		initActivityContentLayout();
-		
+
 		// SETUP DIALOG
 		setupConnectionErrorDialog();
 
@@ -427,15 +427,18 @@ public class NewRecordingActivity extends Activity implements android.widget.Pop
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		mCamera = Camera.open();
+
 		//Set preview with a 90 ortientation
 		// mCamera.setDisplayOrientation(90);
+
 		mCamera.unlock();
         recorder = new MediaRecorder();
         /*mCamera = getCameraInstance();
         mCamera.unlock(); */
         recorder.setCamera(mCamera);
+
         initRecorder();
-        setContentView(R.layout.ly_new_recording);
+		setContentView(R.layout.ly_new_recording);
 
         SurfaceView cameraView = (SurfaceView) findViewById(R.id.CameraView);
         holder = cameraView.getHolder();
@@ -451,6 +454,7 @@ public class NewRecordingActivity extends Activity implements android.widget.Pop
     private void initRecorder() {
         recorder.setAudioSource(MediaRecorder.AudioSource.DEFAULT);
         recorder.setVideoSource(MediaRecorder.VideoSource.DEFAULT);
+		recorder.setOrientationHint(90);
         // recorder.setAudioSource(MediaRecorder.AudioSource.CAMCORDER);
         // recorder.setVideoSource(MediaRecorder.VideoSource.CAMERA);
 
@@ -458,10 +462,12 @@ public class NewRecordingActivity extends Activity implements android.widget.Pop
         recorder.setProfile(cpHigh);
         extras = getIntent().getExtras();
         String name = extras.getString("recordingName");
+
         Calendar c = Calendar.getInstance();
        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd.HH.mm.ss");
         String time = df.format(c.getTime());
 		recorder.setOutputFile(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).toString() + "/" + DataManagerHelper.getInstance().getName(name) /*name + time*/ + ".mp4");
+
         System.out.println("Output File: " + Environment.getExternalStorageDirectory()+toString() + "/" + name + ".mp4");
         recorder.setMaxDuration(50000);
         recorder.setMaxFileSize(5000000);
@@ -485,7 +491,8 @@ public class NewRecordingActivity extends Activity implements android.widget.Pop
 
 
     // TODO: comment this out when the main button works; can remove implementation of interface as well
-    @Override
+    // @Override
+	/*
     public void onClick(View v) {
         /*
         if (videoRecording) {
@@ -500,6 +507,8 @@ public class NewRecordingActivity extends Activity implements android.widget.Pop
         }
         */
     }
+    */
+
 
 	/** A safe way to get an instance of the Camera object. */
 	public static Camera getCameraInstance(){
@@ -516,9 +525,9 @@ public class NewRecordingActivity extends Activity implements android.widget.Pop
 		}
 		return c; // returns null if camera is unavailable
 	}
-	
-	
-	
+
+
+
 	@Override
 	protected void onRestoreInstanceState(Bundle savedInstanceState) {
 		Log.i(TAG, "onRestoreInstanceState");
@@ -538,20 +547,20 @@ public class NewRecordingActivity extends Activity implements android.widget.Pop
 		}
 		super.onResume();
 		Log.i(TAG, "onResume()");
-		
+
 	}
 
 	private void initActivityContentLayout() {
-		
+
 		LayoutParams graphParams, detailParameters;
 		View graphsView = findViewById(R.id.nr_graphs);
-		
+
 		// Initializes layout parameters
 		// graphParams = new LayoutParams(LayoutParams.MATCH_PARENT, 900);
 		graphParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);//Integer.parseInt((getResources().getString(0x7f090001))));//0x7f090001//R.string.graph_height
 		detailParameters = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
 
-		
+
 			for (int i = 0; i < recordingConfiguration
 					.getDisplayChannelsNumber(); i++) {
 				graphs[i] = new Graph(this,
@@ -565,13 +574,13 @@ public class NewRecordingActivity extends Activity implements android.widget.Pop
 				((ViewGroup) graph).addView(graphs[i].getGraphView());
 				((ViewGroup) graphsView).addView(graph, graphParams);
 			}
-		
+
 
 			// If just one channel is being displayed, show configuration details
 			/*if (recordingConfiguration.getDisplayChannelsNumber() == 1) {
 				View details = inflater.inflate(R.layout.in_ly_graph_details, null);
 				((ViewGroup) graphsView).addView(details, detailParameters);
-				
+
 				// get views
 				//uiConfigurationName = (TextView) findViewById(R.id.nr_txt_configName);
 				//uiNumberOfBits = (TextView) findViewById(R.id.nr_txt_config_nbits);
@@ -695,7 +704,7 @@ public class NewRecordingActivity extends Activity implements android.widget.Pop
         return true;
     }
 */
-	
+
 	/**
 	 * called when the back button is pressed and the recording is still
 	 * running. On positive click, Stops and saves the recording, finishes
@@ -706,7 +715,7 @@ public class NewRecordingActivity extends Activity implements android.widget.Pop
 		TextView customTitleView = (TextView) inflater.inflate(R.layout.dialog_custom_title, null);
 		customTitleView.setText(R.string.nr_back_dialog_title);
 		customTitleView.setBackgroundColor(getResources().getColor(R.color.waring_dialog));
-		
+
 		// dialog builder
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setCustomTitle(customTitleView)
@@ -745,7 +754,7 @@ public class NewRecordingActivity extends Activity implements android.widget.Pop
 		TextView customTitleView = (TextView) inflater.inflate(R.layout.dialog_custom_title, null);
 		customTitleView.setText(R.string.nr_bluetooth_dialog_title);
 		customTitleView.setBackgroundColor(getResources().getColor(R.color.error_dialog));
-		
+
 		// dialogs builder
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setCustomTitle(customTitleView)
@@ -769,20 +778,20 @@ public class NewRecordingActivity extends Activity implements android.widget.Pop
 		// creates and shows bluetooth dialog
 		(builder.create()).show();
 	}
-	
+
 	/**
 	 * Sets up a connection error dialog with custom title. This is used to add
 	 * custom message '.setMessage()' and display different possible connection
 	 * errors it '.show()'
-	 * 
+	 *
 	 */
 	private void setupConnectionErrorDialog() {
-		
+
 		// Initializes custom title
 		TextView customTitleView = (TextView) inflater.inflate(R.layout.dialog_custom_title, null);
 		customTitleView.setText(R.string.nr_bluetooth_dialog_title);
 		customTitleView.setBackgroundColor(getResources().getColor(R.color.error_dialog));
-		
+
 		// builder
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setCustomTitle(customTitleView)
@@ -792,28 +801,28 @@ public class NewRecordingActivity extends Activity implements android.widget.Pop
 					public void onClick(DialogInterface dialog, int id) {
 						savingDialog.dismiss();
 						closeRecordingActivity = true;
-						
+
 					}
 				});
 		connectionErrorDialog = builder.create();
 		connectionErrorDialog.setCancelable(false);
 		connectionErrorDialog.setCanceledOnTouchOutside(false);
-		
+
 	}
 
 	/**
 	 * Called when 'start recording' button is twice pressed On positive click,
 	 * the current recording is removed and graph variables and views are reset.
 	 * The overwrite recording starts right away
-	 * 
+	 *
 	 */
 	private void showOverwriteDialog() {
-		
+
 		// initializes custom title view
 		TextView customTitleView = (TextView) inflater.inflate(R.layout.dialog_custom_title, null);
 		customTitleView.setText(R.string.nr_overwrite_dialog_title);
 		customTitleView.setBackgroundColor(getResources().getColor(R.color.waring_dialog));
-		
+
 		// dialog' builder
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setCustomTitle(customTitleView)
@@ -837,16 +846,23 @@ public class NewRecordingActivity extends Activity implements android.widget.Pop
 								closeRecordingActivity = false;
 								savingDialogMessageChanged = false;
 								goToEnd = true;
-                                videoRecording = false;
-								
+								/*
+								recorder.stop();
+								videoRecording = false;
+								initRecorder();
+								prepareRecorder();
+*/
 								// Reset activity content
 								View graphsView = findViewById(R.id.nr_graphs);
 								((ViewGroup) graphsView).removeAllViews();
 								initActivityContentLayout();
 								savingDialog.setMessage(getString(R.string.nr_saving_dialog_adding_header_message));
 								savingDialog.setProgress(0);
-								
+
 								startRecording();
+								/*
+								videoRecording = true;
+								recorder.start(); */
 							}
 						});
 		builder.setNegativeButton(
@@ -877,7 +893,7 @@ public class NewRecordingActivity extends Activity implements android.widget.Pop
 	/**
 	 * Stops and saves the recording in database and data as zip file
 	 */
-	private void stopRecording(){
+	private void stopRecording() {
 		savingDialog.show();
 		//stopChronometer();
 		sendRecordingDuration();
@@ -885,8 +901,12 @@ public class NewRecordingActivity extends Activity implements android.widget.Pop
 		stopService(new Intent(NewRecordingActivity.this, BiopluxService.class));
 		uiMainbutton.setText(getString(R.string.nr_button_start));
 		drawState = true;
+		/*
+		recorder.stop();
+		videoRecording = false;
+		*/
 	}
-	
+
 	/**
 	 * Starts the recording if mac address is 'test' and recording is not
 	 * running OR if bluetooth is supported by the device, bluetooth is enabled,
@@ -895,7 +915,7 @@ public class NewRecordingActivity extends Activity implements android.widget.Pop
 	 * progress dialog  spinning circle when we test the connection
 	 */
 	private boolean startRecording() {
-		
+
 		//Toast.makeText(getApplicationContext(), "sampling: "+recordingConfiguration.getSamplingFrequency() +"visualization: "+recordingConfiguration.getVisualizationFrequency() ,Toast.LENGTH_SHORT).show();
 		BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 		final ProgressDialog progress;
@@ -908,23 +928,23 @@ public class NewRecordingActivity extends Activity implements android.widget.Pop
 				showBluetoothDialog();
 				return false;
 			}
-			
+
 		}
 		//Toast.makeText(getApplicationContext(), "Recording",Toast.LENGTH_LONG).show();
-		
+
 		progress = ProgressDialog.show(this,getResources().getString(R.string.nr_progress_dialog_title),getResources().getString(R.string.nr_progress_dialog_message), true);
-		
+
 		Thread connectionThread = new Thread(new Runnable() {
-					
+
 			@Override
 			public void run() {
-				
-				
-				//Revisar		BitalinoAndroidDevice connectionTest = new BitalinoAndroidDevice(recordingConfiguration.getMacAddress()); 
+
+
+				//Revisar		BitalinoAndroidDevice connectionTest = new BitalinoAndroidDevice(recordingConfiguration.getMacAddress());
 					//Revisar
 					//Revisar					connectionTest.Close();
-				
-				
+
+
 				runOnUiThread(new Runnable(){
 				    public void run(){
 				    	progress.dismiss();
@@ -936,8 +956,8 @@ public class NewRecordingActivity extends Activity implements android.widget.Pop
 							Intent intent = new Intent(classContext, BiopluxService.class);
 							intent.putExtra(KEY_RECORDING_NAME, recording.getName());// + currentDateandTime);
 							intent.putExtra(KEY_CONFIGURATION, recordingConfiguration);
-							intent.putExtra("patientFName", patientFName);							
-							intent.putExtra("patientLName", patientLName);							
+							intent.putExtra("patientFName", patientFName);
+							intent.putExtra("patientLName", patientLName);
 //							intent.putExtra("PHN", patientHealthNumber);
 							startService(intent);
 							bindToService();
@@ -946,17 +966,17 @@ public class NewRecordingActivity extends Activity implements android.widget.Pop
 							displayInfoToast(getString(R.string.nr_info_started));
 							drawState = false;
 							//Toast.makeText(getApplicationContext(), "Recording",Toast.LENGTH_LONG).show();
-							
+
 							if (btConnectError == true) Toast.makeText(classContext, "Bluetooth Connection Error", Toast.LENGTH_LONG).show();
 						}
 				    }
 				});
 			}
 		});
-		
+
 		if(recordingConfiguration.getMacAddress().compareTo("test")==0 && !isServiceRunning() && !recordingOverride)
 			{
-				
+
 				connectionThread.start();
 			}
 		else if(mBluetoothAdapter.isEnabled() && !isServiceRunning() && !recordingOverride) {
@@ -966,7 +986,7 @@ public class NewRecordingActivity extends Activity implements android.widget.Pop
 		return false;
 	}
 
-	
+
 	/**
 	 * Displays an error dialog with corresponding message based on the
 	 * errorCode it receives. If code is unknown it displays FATAL ERROR message
@@ -1019,7 +1039,7 @@ public class NewRecordingActivity extends Activity implements android.widget.Pop
 		((TextView) toastView.findViewById(R.id.display_text)).setText(messageToDisplay);
 		infoToast.show();
 	}
-	
+
 	/**
 	 * Starts Android' chronometer widget to display the recordings duration
 	 */
@@ -1097,7 +1117,7 @@ public class NewRecordingActivity extends Activity implements android.widget.Pop
 			isServiceBounded = false;
 		}
 	}
-	
+
 	/**
 	 * Main button of activity. Starts, overwrites and stops recording depending
 	 * of whether the recording was never started, was started or was started
@@ -1121,24 +1141,27 @@ public class NewRecordingActivity extends Activity implements android.widget.Pop
 			savingDialogMessageChanged = false;
 			goToEnd = true;
             videoRecording = false;
-			
+
 			// Reset activity content
 			View graphsView = findViewById(R.id.nr_graphs);
 			((ViewGroup) graphsView).removeAllViews();
 			initActivityContentLayout();
 			savingDialog.setMessage(getString(R.string.nr_saving_dialog_adding_header_message));
 			savingDialog.setProgress(0);
-			
+
 			startRecording();
+			/*
+			videoRecording = true;
+			recorder.start(); */
 		// Stops recording
 		} else if (isServiceRunning()) {
 			recordingOverride = true;
 			stopRecording();
 		}
 	}
-	
+
 	/************************  EVENTS **********************/
-	
+
 	public void onClikedMenuItems(View v) {
 	    PopupMenu popup = new PopupMenu(this, v);
 	    popup.setOnMenuItemClickListener(this);
@@ -1146,7 +1169,7 @@ public class NewRecordingActivity extends Activity implements android.widget.Pop
 	    inflater.inflate(R.menu.new_recording_menu, popup.getMenu());
 	    popup.show();
 	}
-	
+
 	@Override
 	public boolean onMenuItemClick(MenuItem item) {
 	    // Handle item selection
@@ -1167,12 +1190,12 @@ public class NewRecordingActivity extends Activity implements android.widget.Pop
 	        		else
 	        			startValue = graphs[i].getxValue() - Long.valueOf(getResources().getString(
 								R.string.graph_viewport_size));
-	        			
+
 	        		graphs[i].getGraphView().setViewPort(startValue, Long.valueOf(getResources().getString(
 							R.string.graph_viewport_size)));
 	        		graphs[i].getGraphView().redrawAll();
 	        	}
-	    			
+
 	        	return true;
 	        default:
 	            return super.onOptionsItemSelected(item);
@@ -1190,9 +1213,9 @@ public class NewRecordingActivity extends Activity implements android.widget.Pop
 	 */
 	public void zoomIn(View view){
 //		for (int i = 0; i < graphs.length; i++)
-//			graphs[i].getGraphView().zoomIn(currentZoomValue); 
+//			graphs[i].getGraphView().zoomIn(currentZoomValue);
 	}
-	
+
 	/**
 	 * Shortens the graphs' view port
 	 */
@@ -1205,10 +1228,10 @@ public class NewRecordingActivity extends Activity implements android.widget.Pop
 		else if(currentZoomValue == 400)
 			zoomOutValue = 25;
 //		for (int i = 0; i < graphs.length; i++)
-//			graphs[i].getGraphView().zoomOut(zoomOutValue); 
+//			graphs[i].getGraphView().zoomOut(zoomOutValue);
 	}
-	
-	
+
+
 	@Override
 	protected void onPause() {
 		try {
