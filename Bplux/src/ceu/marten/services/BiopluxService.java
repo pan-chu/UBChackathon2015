@@ -1,16 +1,5 @@
 package ceu.marten.services;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.Timer;
-import java.util.TimerTask;
-
-import com.bitalino.comm.BITalinoFrame;
-import com.bitalino.deviceandroid.BitalinoAndroidDevice;
-import com.bitalino.util.SensorDataConverter;
-
 import android.annotation.SuppressLint;
 import android.app.Notification;
 import android.app.PendingIntent;
@@ -24,15 +13,28 @@ import android.os.IBinder;
 import android.os.Message;
 import android.os.Messenger;
 import android.os.PowerManager;
-import android.os.SystemClock;
 import android.os.PowerManager.WakeLock;
 import android.os.RemoteException;
+import android.os.SystemClock;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.widget.Chronometer;
+
+import com.bitalino.comm.BITalinoFrame;
+import com.bitalino.deviceandroid.BitalinoAndroidDevice;
+import com.bitalino.util.SensorDataConverter;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.Timer;
+import java.util.TimerTask;
+
 import ceu.marten.bitadroid.R;
 import ceu.marten.model.DeviceConfiguration;
 import ceu.marten.model.io.DataManager;
+import ceu.marten.model.io.DataManagerHelper;
 import ceu.marten.ui.NewRecordingActivity;
 import ceu.marten.ui.SettingsActivity;
 
@@ -234,7 +236,7 @@ public class BiopluxService extends Service {
 			//Once phone is connected to the Bitalino, start the chronometer for accurate timing
 			//@author Caleb Ng (2015)
 			startChronometer();
-			dataManager = new DataManager(this, recordingName + currentDateandTime, configuration, patientFName, patientLName);
+			dataManager = new DataManager(this, DataManagerHelper.getInstance().getName(recordingName), configuration, patientFName, patientLName);
 			createNotification();
 		}
 		return START_NOT_STICKY; // do not re-create service if system kills it

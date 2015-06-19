@@ -333,8 +333,8 @@ public class DisplayStoredGraphActivity extends Activity {
 		for (File file : dcimDir.listFiles())
 		{
 			final String videoFilePath = file.getPath();
-			if (videoFilePath.endsWith(".mp4") && (videoFilePath.equals(recordingName.substring(0, recordingName.lastIndexOf('.')))))
-			{
+			final String videoFileName = file.getName();
+			if (videoFilePath.endsWith(".mp4") && ((videoFileName.substring(0, videoFileName.lastIndexOf('.'))).equalsIgnoreCase(recordingName.substring(0, recordingName.lastIndexOf('.'))))) {
 				videoPath = file.getPath();
 				break;
 			}

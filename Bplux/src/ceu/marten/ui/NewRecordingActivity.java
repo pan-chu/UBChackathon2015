@@ -66,6 +66,7 @@ import ceu.marten.model.Constants;
 import ceu.marten.model.DeviceConfiguration;
 import ceu.marten.model.DeviceRecording;
 import ceu.marten.model.io.DataManager;
+import ceu.marten.model.io.DataManagerHelper;
 import ceu.marten.services.BiopluxService;
 
 /**
@@ -196,7 +197,7 @@ public class NewRecordingActivity extends Activity implements android.widget.Pop
             videoRecording = false;
         }
         // recorder.release();
-        // finish();
+		// finish();
         System.out.println("Would have released recorder here.. but it keeps giving me NPE's");
     }
 
@@ -460,7 +461,7 @@ public class NewRecordingActivity extends Activity implements android.widget.Pop
         Calendar c = Calendar.getInstance();
        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd.HH.mm.ss");
         String time = df.format(c.getTime());
-        recorder.setOutputFile(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).toString() + "/" + name + time + ".mp4");
+		recorder.setOutputFile(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).toString() + "/" + DataManagerHelper.getInstance().getName(name) /*name + time*/ + ".mp4");
         System.out.println("Output File: " + Environment.getExternalStorageDirectory()+toString() + "/" + name + ".mp4");
         recorder.setMaxDuration(50000);
         recorder.setMaxFileSize(5000000);
@@ -546,7 +547,8 @@ public class NewRecordingActivity extends Activity implements android.widget.Pop
 		View graphsView = findViewById(R.id.nr_graphs);
 		
 		// Initializes layout parameters
-		graphParams = new LayoutParams(LayoutParams.MATCH_PARENT, 900);//Integer.parseInt((getResources().getString(0x7f090001))));//0x7f090001//R.string.graph_height
+		// graphParams = new LayoutParams(LayoutParams.MATCH_PARENT, 900);
+		graphParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);//Integer.parseInt((getResources().getString(0x7f090001))));//0x7f090001//R.string.graph_height
 		detailParameters = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
 		
 
