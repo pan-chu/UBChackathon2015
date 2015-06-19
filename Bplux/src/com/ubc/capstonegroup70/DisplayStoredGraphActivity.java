@@ -36,7 +36,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
@@ -246,12 +248,17 @@ public class DisplayStoredGraphActivity extends Activity {
 		// Format graph labels to show the appropriate domain on x-axis
 		GraphView graphView = new LineGraphView(this, graphTitle) {
 			protected String formatLabel(double value, boolean isValueX) {
+				Calendar c = Calendar.getInstance();
+				SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss");
+				String time = df.format(c.getTime());
 				if (isValueX) {
 					long xValue;
+					// unecessary because we are using Calendar now
+					/*
 					if (value < 0.000){
 						xValue = 0;
 						return "00:00:00";
-					}
+					} */
 					xValue = (long) value;
 					if(dataSet == dataSetFFT || dataSet == dataSetPWR) {
 						// Set x-axis to use the frequency domain
@@ -259,8 +266,9 @@ public class DisplayStoredGraphActivity extends Activity {
 					}
 					else {
 						// Set the x-axis to use the time domain
-						return String.format("%02d:%02d:%02d",(int) ((xValue / (samplingFrequency*60*60)) % 24), (int) ((xValue / (samplingFrequency*60)) % 60), (int) ((xValue / samplingFrequency)) % 60);
-					}
+						// return String.format("%02d:%02d:%02d",(int) ((xValue / (samplingFrequency*60*60)) % 24), (int) ((xValue / (samplingFrequency*60)) % 60), (int) ((xValue / samplingFrequency)) % 60);
+		return time;
+								}
 
 				} else {
 					if(dataSet == dataSetFFT || dataSet == dataSetPWR) {
