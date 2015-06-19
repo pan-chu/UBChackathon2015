@@ -55,10 +55,17 @@
       <file leaf-file-name="NewRecordingActivity.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Bplux/src/ceu/marten/ui/NewRecordingActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="25.631016">
-              <caret line="552" column="0" selection-start-line="552" selection-start-column="0" selection-end-line="552" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.6871658">
+              <caret line="1239" column="75" selection-start-line="1239" selection-start-column="75" selection-end-line="1239" selection-end-column="75" />
               <folding>
+                <element signature="e#0#43291#0" expanded="true" />
                 <element signature="imports" expanded="true" />
+                <element signature="e#5271#5716#0" expanded="true" />
+                <element signature="e#5715#5716#0" expanded="true" />
+                <element signature="e#7560#7616#0" expanded="true" />
+                <element signature="e#8012#8049#0" expanded="true" />
+                <element signature="e#12300#12342#0" expanded="true" />
+                <element signature="e#12371#12429#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -393,7 +400,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="aspect.path.notification.shown" value="true" />
@@ -730,7 +737,14 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
+            <element signature="e#0#43291#0" expanded="true" />
             <element signature="imports" expanded="true" />
+            <element signature="e#5271#5716#0" expanded="true" />
+            <element signature="e#5715#5716#0" expanded="true" />
+            <element signature="e#7560#7616#0" expanded="true" />
+            <element signature="e#8012#8049#0" expanded="true" />
+            <element signature="e#12300#12342#0" expanded="true" />
+            <element signature="e#12371#12429#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -773,7 +787,14 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="381" column="38" selection-start-line="381" selection-start-column="38" selection-end-line="381" selection-end-column="38" />
           <folding>
+            <element signature="e#0#43291#0" expanded="true" />
             <element signature="imports" expanded="true" />
+            <element signature="e#5271#5716#0" expanded="true" />
+            <element signature="e#5715#5716#0" expanded="true" />
+            <element signature="e#7560#7616#0" expanded="true" />
+            <element signature="e#8012#8049#0" expanded="true" />
+            <element signature="e#12300#12342#0" expanded="true" />
+            <element signature="e#12371#12429#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1080,10 +1101,17 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Bplux/src/ceu/marten/ui/NewRecordingActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="25.631016">
-          <caret line="552" column="0" selection-start-line="552" selection-start-column="0" selection-end-line="552" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.6871658">
+          <caret line="1239" column="75" selection-start-line="1239" selection-start-column="75" selection-end-line="1239" selection-end-column="75" />
           <folding>
+            <element signature="e#0#43291#0" expanded="true" />
             <element signature="imports" expanded="true" />
+            <element signature="e#5271#5716#0" expanded="true" />
+            <element signature="e#5715#5716#0" expanded="true" />
+            <element signature="e#7560#7616#0" expanded="true" />
+            <element signature="e#8012#8049#0" expanded="true" />
+            <element signature="e#12300#12342#0" expanded="true" />
+            <element signature="e#12371#12429#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1145,7 +1173,6 @@
             <option name="proportions">
               <list>
                 <option value="0.2" />
-                <option value="0.6" />
               </list>
             </option>
           </splitter-proportions>
