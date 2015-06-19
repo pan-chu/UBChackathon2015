@@ -550,7 +550,6 @@ public class NewRecordingActivity extends Activity implements android.widget.Pop
 		// graphParams = new LayoutParams(LayoutParams.MATCH_PARENT, 900);
 		graphParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);//Integer.parseInt((getResources().getString(0x7f090001))));//0x7f090001//R.string.graph_height
 		detailParameters = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
-		
 
 		
 			for (int i = 0; i < recordingConfiguration
